@@ -25,9 +25,13 @@ class StringExTests: XCTestCase {
     }
 
     func testPerformanceExample() {
-        // This is an example of a performance test case.
+        let bundle = Bundle(for: type(of: self))
+        guard let fileURL = bundle.url(forResource:"example", withExtension: "htm"), let content = try? String(contentsOf: fileURL, encoding: .utf8) else {
+            return
+        }
+        
         self.measure {
-            // Put the code you want to measure the time of here.
+            _ = StringEx(string: content)
         }
     }
 
