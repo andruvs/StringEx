@@ -17,21 +17,22 @@ class HTMLParser {
     private(set) var storage = HTMLTagStorage()
     
     private var index: String.Index // Current cursor position
-    private var offset: Int = 0 // Distance from the beginning of the source to the current cursor position (symbols count)
-    private var offsetCorrection: Int = 0 // Offset correction due to missing tags
+    private var rawStringLength: Int = 0 // Raw string symbols count
+    private var resultStringLength: Int = 0 // Result string symbols count
     
     private var depth = 0 // Current tag depth
-    private var counter = [HTMLTag: Int]() // Start tags count
-    private var queue = [HTMLTag]() // Queue of the start tags
+    private var counter = [String: Int]() // Start tags count
+    private var queue = [HTMLStartTag]() // Queue of the start tags
     
-    private var resultStringLength: Int = 0
+    //private var resultStringLength: Int = 0
     
     init(source: String) {
         self.source = source
-        rawString = source
-        resultString = ""
         
         index = source.startIndex
+        
+        rawString = ""
+        resultString = ""
     }
     
     func parse() {
@@ -41,6 +42,7 @@ class HTMLParser {
         
         // Find all substrings that begin with "<" and end with ">" and then try to parse html tags..
         guard let regex = try? NSRegularExpression(pattern: "<[^>]+>", options: []) else {
+            resultString = source
             return
         }
         
@@ -56,7 +58,7 @@ class HTMLParser {
         
         // Append the last part of the source without tags
         if index < source.endIndex {
-            appendResultString(to: source.endIndex)
+            appendString(to: source.endIndex)
         }
         
         // Close all missing end tags
@@ -64,51 +66,51 @@ class HTMLParser {
             for startTag in queue.reversed() {
                 depth -= 1
                 
-                var missingTag = HTMLTag(type: .endTag, tagName: startTag.tagName)
-                insert(tag: &missingTag)
-                storage.add(startTag: startTag, endTag: missingTag)
+                let missingTag = HTMLEndTag(tagName: startTag.tagName)
+                appendHTMLTag(missingTag)
+                storage.append(HTMLTagPair(startTag: startTag, endTag: missingTag))
             }
         }
     }
     
     private func process(tag: HTMLTag, in range: Range<String.Index>) {
-        var tag = tag
         
-        // Determine the offset of the range
-        let startOffset = source.distance(from: index, to: range.lowerBound) + offset
-        let endOffset = source.distance(from: index, to: range.upperBound) + offset
+        // Append the part of the source string from cursor position to the current tag
+        appendString(to: range.lowerBound)
         
-        // Append the part of the source between two tags to the result string
-        appendResultString(to: range.lowerBound)
-        
-        // Update the current index and offset
+        // Update the current cursor position
         index = range.upperBound
-        offset = endOffset
         
-        if tag.type == .startTag {
-            configure(tag: &tag, startOffset: startOffset, endOffset: endOffset)
+        if let tag = tag as? HTMLSelfClosingTag {
+            let startTag = tag.startTag
+            let endTag = tag.endTag
+            appendHTMLTag(startTag)
+            appendHTMLTag(endTag)
+            storage.append(HTMLTagPair(startTag: startTag, endTag: endTag))
+        } else if let tag = tag as? HTMLStartTag {
+            appendHTMLTag(tag)
             depth += 1
             queue.append(tag)
-            counter[tag] = (counter[tag] ?? 0) + 1
-        } else if tag.type == .endTag {
-            if (counter[tag] ?? 0) > 0 { // If there is the same start tag in the queue
+            counter[tag.tagName] = (counter[tag.tagName] ?? 0) + 1
+        } else if let tag = tag as? HTMLEndTag {
+            if (counter[tag.tagName] ?? 0) > 0 { // If there is the same start tag in the queue
                 var closedCount = 0
                 
                 // Close start tags until we meet the same tag
                 for startTag in queue.reversed() {
                     depth -= 1
-                    counter[startTag] = (counter[startTag] ?? 0) - 1
+                    counter[startTag.tagName] = (counter[startTag.tagName] ?? 0) - 1
                     closedCount += 1
                     
                     if startTag == tag {
-                        configure(tag: &tag, startOffset: startOffset, endOffset: endOffset)
-                        storage.add(startTag: startTag, endTag: tag)
+                        appendHTMLTag(tag)
+                        storage.append(HTMLTagPair(startTag: startTag, endTag: tag))
                         break
                     } else {
                         // Insert missing end tag to the raw string
-                        var missingTag = HTMLTag(type: .endTag, tagName: startTag.tagName)
-                        insert(tag: &missingTag, offsetBy: startOffset)
-                        storage.add(startTag: startTag, endTag: missingTag)
+                        let missingTag = HTMLEndTag(tagName: startTag.tagName)
+                        appendHTMLTag(missingTag)
+                        storage.append(HTMLTagPair(startTag: startTag, endTag: missingTag))
                     }
                 }
                 
@@ -116,42 +118,35 @@ class HTMLParser {
                 queue.removeLast(closedCount)
             } else {
                 // If there is no same start tag then insert missing start tag to rhe raw string
-                var missingTag = HTMLTag(type: .startTag, tagName: tag.tagName)
-                insert(tag: &missingTag, offsetBy: startOffset)
-                configure(tag: &tag, startOffset: startOffset, endOffset: endOffset)
-                storage.add(startTag: missingTag, endTag: tag)
+                let missingTag = HTMLStartTag(tagName: tag.tagName)
+                appendHTMLTag(missingTag)
+                appendHTMLTag(tag)
+                storage.append(HTMLTagPair(startTag: missingTag, endTag: tag))
             }
-        } else if tag.type == .selfClosingTag {
-            configure(tag: &tag, startOffset: startOffset, endOffset: endOffset)
-            storage.add(selfClosingTag: tag)
         }
     }
     
-    private func appendResultString(to upperBound: String.Index) {
-        resultString.append(contentsOf: source[index..<upperBound])
-        resultStringLength = resultString.count
+    private func appendString(to upperBound: String.Index) {
+        let str = source[index..<upperBound]
+        let strLength = str.count
+        
+        rawString.append(contentsOf: str)
+        resultString.append(contentsOf: str)
+        
+        rawStringLength += strLength
+        resultStringLength += strLength
     }
     
-    private func insert(tag: inout HTMLTag, offsetBy: Int? = nil) {
-        let tagString = "\(tag)"
-        let tagStringLength = tagString.count
+    private func appendHTMLTag(_ tag: HTMLTag) {
+        let str: String = "\(tag)"
+        let strLength = str.count
         
-        if let offsetBy = offsetBy {
-            rawString.insert(contentsOf: tagString, at: rawString.index(rawString.startIndex, offsetBy: offsetBy + offsetCorrection))
-            configure(tag: &tag, startOffset: offsetBy, endOffset: offsetBy + tagStringLength)
-        } else {
-            let rawStringLength = rawString.count
-            
-            rawString.append(tagString)
-            configure(tag: &tag, startOffset: rawStringLength, endOffset: rawStringLength + tagStringLength)
-        }
-        
-        offsetCorrection += tagStringLength
-    }
-    
-    private func configure(tag: inout HTMLTag, startOffset: Int, endOffset: Int) {
         tag.depth = depth
-        tag.rawRange = startOffset + offsetCorrection..<endOffset + offsetCorrection
+        tag.rawRange = rawStringLength..<rawStringLength + strLength
         tag.position = resultStringLength
+        
+        rawString.append(contentsOf: str)
+        
+        rawStringLength += strLength
     }
 }

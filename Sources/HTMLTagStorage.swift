@@ -8,51 +8,41 @@
 
 import Foundation
 
-public struct HTMLTagStorage {
-    typealias Index = (startTagIndex: Int, endTagIndex: Int)
-    
-    private(set) var count = 0
+class HTMLTagStorage {
+    typealias Iterator = (HTMLTagPair) -> Void
     
     private var tags = [HTMLTag]()
     
-    private var tagsByName = [String: [Index]]()
-    private var tagsByClass = [String: [Index]]()
-    private var tagsById = [String: [Index]]()
+    private var tagsByName = [String: [HTMLTagPair]]()
+    private var tagsByClass = [String: [HTMLTagPair]]()
+    private var tagsById = [String: [HTMLTagPair]]()
     
-    mutating func add(startTag: HTMLTag, endTag: HTMLTag) {
-        if startTag.type == .startTag && endTag.type == .endTag {
-            tags.append(startTag)
-            tags.append(endTag)
-            
-            register(tag: startTag, with: (count, count + 1))
-            
-            count += 2
-        }
+    private var sorted = false
+    
+    var count: Int {
+        return tags.count
     }
     
-    mutating func add(selfClosingTag tag: HTMLTag) {
-        if tag.type == .selfClosingTag {
-            tags.append(tag)
-            
-            register(tag: tag, with: (count, count))
-            
-            count += 1
-        }
-    }
-    
-    private mutating func register(tag: HTMLTag, with index: Index) {
+    func append(_ tagPair: HTMLTagPair) {
+        
+        sorted = false
+        
+        let tag = tagPair.startTag
+        
+        tags.append(tag)
+        tags.append(tagPair.endTag)
         
         if tagsByName[tag.tagName] == nil {
-            tagsByName[tag.tagName] = [Index]()
+            tagsByName[tag.tagName] = [HTMLTagPair]()
         }
-        tagsByName[tag.tagName]?.append(index)
+        tagsByName[tag.tagName]?.append(tagPair)
         
         if tag.attributes?[.id] != nil {
             if let value = (tag.attributes?[.id] as? HTMLAttributeSingle)?.value {
                 if tagsById[value] == nil {
-                    tagsById[value] = [Index]()
+                    tagsById[value] = [HTMLTagPair]()
                 }
-                tagsByName[value]?.append(index)
+                tagsById[value]?.append(tagPair)
             }
         }
         
@@ -60,10 +50,69 @@ public struct HTMLTagStorage {
             if let values = (tag.attributes?[.class] as? HTMLAttributeMultiple)?.value {
                 for value in values {
                     if tagsByClass[value] == nil {
-                        tagsByClass[value] = [Index]()
+                        tagsByClass[value] = [HTMLTagPair]()
                     }
-                    tagsByClass[value]?.append(index)
+                    tagsByClass[value]?.append(tagPair)
                 }
+            }
+        }
+    }
+    
+    func forEachTag(in tagPair: HTMLTagPair? = nil, closure: ((HTMLTag, Int, Range<Int>) -> Bool)) {
+        if !sorted {
+            sorted = true
+            tags.sort { (tag1, tag2) -> Bool in
+                if let offset1 = tag1.rawRange?.lowerBound, let offset2 = tag2.rawRange?.lowerBound {
+                    return offset1 < offset2
+                }
+                return false
+            }
+        }
+        
+        if let tagPair = tagPair {
+            var fireClosure = false
+            for tag in tags {
+                if tag === tagPair.endTag {
+                    return
+                }
+                if fireClosure {
+                    if let position = tag.position, let range = tag.rawRange {
+                        if !closure(tag, position, range) {
+                            return
+                        }
+                    }
+                }
+                if tag === tagPair.startTag {
+                    fireClosure = true
+                }
+            }
+        } else {
+            for tag in tags {
+                if let position = tag.position, let range = tag.rawRange {
+                    if !closure(tag, position, range) {
+                        return
+                    }
+                }
+            }
+        }
+    }
+    
+    func forEach(tagName: String, closure: Iterator) {
+        forEach(tags: tagsByName[tagName], closure: closure)
+    }
+    
+    func forEach(class: String, closure: Iterator) {
+        forEach(tags: tagsByClass[`class`], closure: closure)
+    }
+    
+    func forEach(id: String, closure: Iterator) {
+        forEach(tags: tagsById[id], closure: closure)
+    }
+    
+    private func forEach(tags: [HTMLTagPair]?, closure: Iterator) {
+        if let tags = tags {
+            for tagPair in tags {
+                closure(tagPair)
             }
         }
     }

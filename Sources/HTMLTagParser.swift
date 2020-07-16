@@ -8,6 +8,12 @@
 
 import Foundation
 
+fileprivate enum HTMLTagType {
+    case startTag
+    case endTag
+    case selfClosingTag
+}
+
 fileprivate enum CodePoint {
     typealias CodeUnit = UTF32.CodeUnit
     
@@ -271,7 +277,14 @@ class HTMLTagParser {
             }
         }
         
-        return HTMLTag(type: tagType, tagName: tagName!, attributes: tagAttributes)
+        switch tagType {
+        case .selfClosingTag:
+            return HTMLSelfClosingTag(tagName: tagName!, attributes: tagAttributes)
+        case .startTag:
+            return HTMLStartTag(tagName: tagName!, attributes: tagAttributes)
+        case .endTag:
+            return HTMLEndTag(tagName: tagName!)
+        }
     }
     
     private func nextIndex() {

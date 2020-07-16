@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		CA1519EA244F1069005E8F76 /* HTMLTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1519E9244F1069005E8F76 /* HTMLTag.swift */; };
-		CA33ED2E2391648A004EDBBC /* Selector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA33ED2D2391648A004EDBBC /* Selector.swift */; };
 		CA33ED3023916583004EDBBC /* SelectorFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA33ED2F23916583004EDBBC /* SelectorFilter.swift */; };
 		CA43AE162458AC4F00AB4CF5 /* HTMLAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA43AE152458AC4F00AB4CF5 /* HTMLAttribute.swift */; };
 		CA54C52B239117EA00282E21 /* StringEx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA54C521239117EA00282E21 /* StringEx.framework */; };
@@ -23,11 +22,20 @@
 		CA62660E244DDA090050C3A4 /* StringEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA62660D244DDA090050C3A4 /* StringEx.swift */; };
 		CA626610244DDBF90050C3A4 /* HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA62660F244DDBF90050C3A4 /* HTMLParser.swift */; };
 		CA626612244DECBC0050C3A4 /* HTMLTagParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA626611244DECBC0050C3A4 /* HTMLTagParser.swift */; };
+		CA7E596D2472B02D007F8245 /* SelectorResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7E596C2472B02D007F8245 /* SelectorResult.swift */; };
+		CA88D17B24ACCBE600E79798 /* RangeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA88D17A24ACCBE600E79798 /* RangeConverter.swift */; };
+		CA88D17D24AF74AD00E79798 /* String+StringEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA88D17C24AF74AD00E79798 /* String+StringEx.swift */; };
 		CA9AA66624658E6F00C2C2CF /* HTMLTagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AA66524658E6F00C2C2CF /* HTMLTagTests.swift */; };
 		CA9AA66824658EF900C2C2CF /* HTMLTagParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AA66724658EF900C2C2CF /* HTMLTagParserTests.swift */; };
 		CA9AA66A2469DA6100C2C2CF /* HTMLAttributeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AA6692469DA6100C2C2CF /* HTMLAttributeTests.swift */; };
 		CACDABD72462F64B00167623 /* HTMLTagStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACDABD62462F64B00167623 /* HTMLTagStorage.swift */; };
+		CAE4507D24842DA200284777 /* HTMLTagPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE4507C24842DA200284777 /* HTMLTagPair.swift */; };
+		CAE4507F248D1F0100284777 /* Array+StringEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE4507E248D1F0100284777 /* Array+StringEx.swift */; };
+		CAE45081248D1F5100284777 /* Array+StringExTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE45080248D1F5100284777 /* Array+StringExTests.swift */; };
 		CAF7D62F246BE2A1000238A3 /* example.htm in Resources */ = {isa = PBXBuildFile; fileRef = CAF7D62E246BE2A1000238A3 /* example.htm */; };
+		CAF7D631246C2D3D000238A3 /* HTMLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF7D630246C2D3D000238A3 /* HTMLParserTests.swift */; };
+		CAF7D633246C31DB000238A3 /* StringSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF7D632246C31DB000238A3 /* StringSelector.swift */; };
+		CAF7D635246C32A3000238A3 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF7D634246C32A3000238A3 /* Filter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +50,6 @@
 
 /* Begin PBXFileReference section */
 		CA1519E9244F1069005E8F76 /* HTMLTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLTag.swift; sourceTree = "<group>"; };
-		CA33ED2D2391648A004EDBBC /* Selector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selector.swift; sourceTree = "<group>"; };
 		CA33ED2F23916583004EDBBC /* SelectorFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectorFilter.swift; sourceTree = "<group>"; };
 		CA43AE152458AC4F00AB4CF5 /* HTMLAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLAttribute.swift; sourceTree = "<group>"; };
 		CA54C521239117EA00282E21 /* StringEx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StringEx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,11 +69,20 @@
 		CA62660D244DDA090050C3A4 /* StringEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringEx.swift; sourceTree = "<group>"; };
 		CA62660F244DDBF90050C3A4 /* HTMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLParser.swift; sourceTree = "<group>"; };
 		CA626611244DECBC0050C3A4 /* HTMLTagParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLTagParser.swift; sourceTree = "<group>"; };
+		CA7E596C2472B02D007F8245 /* SelectorResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectorResult.swift; sourceTree = "<group>"; };
+		CA88D17A24ACCBE600E79798 /* RangeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeConverter.swift; sourceTree = "<group>"; };
+		CA88D17C24AF74AD00E79798 /* String+StringEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+StringEx.swift"; sourceTree = "<group>"; };
 		CA9AA66524658E6F00C2C2CF /* HTMLTagTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLTagTests.swift; sourceTree = "<group>"; };
 		CA9AA66724658EF900C2C2CF /* HTMLTagParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLTagParserTests.swift; sourceTree = "<group>"; };
 		CA9AA6692469DA6100C2C2CF /* HTMLAttributeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLAttributeTests.swift; sourceTree = "<group>"; };
 		CACDABD62462F64B00167623 /* HTMLTagStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLTagStorage.swift; sourceTree = "<group>"; };
+		CAE4507C24842DA200284777 /* HTMLTagPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLTagPair.swift; sourceTree = "<group>"; };
+		CAE4507E248D1F0100284777 /* Array+StringEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+StringEx.swift"; sourceTree = "<group>"; };
+		CAE45080248D1F5100284777 /* Array+StringExTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+StringExTests.swift"; sourceTree = "<group>"; };
 		CAF7D62E246BE2A1000238A3 /* example.htm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = example.htm; sourceTree = "<group>"; };
+		CAF7D630246C2D3D000238A3 /* HTMLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLParserTests.swift; sourceTree = "<group>"; };
+		CAF7D632246C31DB000238A3 /* StringSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSelector.swift; sourceTree = "<group>"; };
+		CAF7D634246C32A3000238A3 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,13 +137,19 @@
 				CA54C524239117EA00282E21 /* StringEx.h */,
 				CA54C525239117EA00282E21 /* Info.plist */,
 				CA62660D244DDA090050C3A4 /* StringEx.swift */,
-				CA33ED2D2391648A004EDBBC /* Selector.swift */,
+				CAF7D632246C31DB000238A3 /* StringSelector.swift */,
+				CAF7D634246C32A3000238A3 /* Filter.swift */,
+				CA7E596C2472B02D007F8245 /* SelectorResult.swift */,
 				CA33ED2F23916583004EDBBC /* SelectorFilter.swift */,
 				CA62660F244DDBF90050C3A4 /* HTMLParser.swift */,
 				CA626611244DECBC0050C3A4 /* HTMLTagParser.swift */,
 				CA1519E9244F1069005E8F76 /* HTMLTag.swift */,
+				CAE4507C24842DA200284777 /* HTMLTagPair.swift */,
 				CA43AE152458AC4F00AB4CF5 /* HTMLAttribute.swift */,
 				CACDABD62462F64B00167623 /* HTMLTagStorage.swift */,
+				CA88D17A24ACCBE600E79798 /* RangeConverter.swift */,
+				CAE4507E248D1F0100284777 /* Array+StringEx.swift */,
+				CA88D17C24AF74AD00E79798 /* String+StringEx.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -141,6 +163,8 @@
 				CA9AA66524658E6F00C2C2CF /* HTMLTagTests.swift */,
 				CA9AA66724658EF900C2C2CF /* HTMLTagParserTests.swift */,
 				CA9AA6692469DA6100C2C2CF /* HTMLAttributeTests.swift */,
+				CAF7D630246C2D3D000238A3 /* HTMLParserTests.swift */,
+				CAE45080248D1F5100284777 /* Array+StringExTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -309,14 +333,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA88D17B24ACCBE600E79798 /* RangeConverter.swift in Sources */,
 				CA62660E244DDA090050C3A4 /* StringEx.swift in Sources */,
+				CAF7D635246C32A3000238A3 /* Filter.swift in Sources */,
 				CA1519EA244F1069005E8F76 /* HTMLTag.swift in Sources */,
+				CAF7D633246C31DB000238A3 /* StringSelector.swift in Sources */,
 				CA626610244DDBF90050C3A4 /* HTMLParser.swift in Sources */,
+				CAE4507F248D1F0100284777 /* Array+StringEx.swift in Sources */,
 				CA626612244DECBC0050C3A4 /* HTMLTagParser.swift in Sources */,
+				CAE4507D24842DA200284777 /* HTMLTagPair.swift in Sources */,
 				CA43AE162458AC4F00AB4CF5 /* HTMLAttribute.swift in Sources */,
+				CA88D17D24AF74AD00E79798 /* String+StringEx.swift in Sources */,
 				CACDABD72462F64B00167623 /* HTMLTagStorage.swift in Sources */,
+				CA7E596D2472B02D007F8245 /* SelectorResult.swift in Sources */,
 				CA33ED3023916583004EDBBC /* SelectorFilter.swift in Sources */,
-				CA33ED2E2391648A004EDBBC /* Selector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,7 +355,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA54C530239117EA00282E21 /* StringExTests.swift in Sources */,
+				CAF7D631246C2D3D000238A3 /* HTMLParserTests.swift in Sources */,
 				CA9AA66824658EF900C2C2CF /* HTMLTagParserTests.swift in Sources */,
+				CAE45081248D1F5100284777 /* Array+StringExTests.swift in Sources */,
 				CA9AA66624658E6F00C2C2CF /* HTMLTagTests.swift in Sources */,
 				CA9AA66A2469DA6100C2C2CF /* HTMLAttributeTests.swift in Sources */,
 			);

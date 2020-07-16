@@ -32,44 +32,44 @@ class HTMLTagParserTests: XCTestCase {
     }
 
     func testStartTagParsing() {
-        XCTAssertEqual(.startTag, parseTag(from: "<a>")?.type)
-        XCTAssertEqual(.startTag, parseTag(from: "<a >")?.type)
-        XCTAssertEqual(.startTag, parseTag(from: "<a   >")?.type)
-        XCTAssertEqual(.startTag, parseTag(from: "<a href=\"javascript:void(0);\">")?.type)
-        XCTAssertEqual(.startTag, parseTag(from: "<a href=\"javascript:void(0);\" class=\"link\" >")?.type)
+        XCTAssert(parseTag(from: "<a>") is HTMLStartTag)
+        XCTAssert(parseTag(from: "<a >") is HTMLStartTag)
+        XCTAssert(parseTag(from: "<a   >") is HTMLStartTag)
+        XCTAssert(parseTag(from: "<a href=\"javascript:void(0);\">") is HTMLStartTag)
+        XCTAssert(parseTag(from: "<a href=\"javascript:void(0);\" class=\"link\" >") is HTMLStartTag)
         XCTAssertNil(parseTag(from: "< a>"))
     }
     
     func testEndTagParsing() {
-        XCTAssertEqual(.endTag, parseTag(from: "</a>")?.type)
-        XCTAssertEqual(.endTag, parseTag(from: "</a >")?.type)
-        XCTAssertEqual(.endTag, parseTag(from: "</a   >")?.type)
+        XCTAssert(parseTag(from: "</a>") is HTMLEndTag)
+        XCTAssert(parseTag(from: "</a >") is HTMLEndTag)
+        XCTAssert(parseTag(from: "</a   >") is HTMLEndTag)
         XCTAssertNil(parseTag(from: "</ a>"))
         XCTAssertNil(parseTag(from: "< /a>"))
     }
 
     func testSelfClosingTagParsing() {
-        XCTAssertEqual(.selfClosingTag, parseTag(from: "<a/>")?.type)
-        XCTAssertEqual(.selfClosingTag, parseTag(from: "<a />")?.type)
-        XCTAssertEqual(.selfClosingTag, parseTag(from: "<a   />")?.type)
-        XCTAssertEqual(.selfClosingTag, parseTag(from: "<a href=\"javascript:void(0);\"/>")?.type)
-        XCTAssertEqual(.selfClosingTag, parseTag(from: "<a href=\"javascript:void(0);\" class=\"link\" />")?.type)
-        XCTAssertNotEqual(.selfClosingTag, parseTag(from: "<a / >")?.type)
+        XCTAssert(parseTag(from: "<a/>") is HTMLSelfClosingTag)
+        XCTAssert(parseTag(from: "<a />") is HTMLSelfClosingTag)
+        XCTAssert(parseTag(from: "<a   />") is HTMLSelfClosingTag)
+        XCTAssert(parseTag(from: "<a href=\"javascript:void(0);\"/>") is HTMLSelfClosingTag)
+        XCTAssert(parseTag(from: "<a href=\"javascript:void(0);\" class=\"link\" />") is HTMLSelfClosingTag)
+        XCTAssert(!(parseTag(from: "<a / >") is HTMLSelfClosingTag))
         XCTAssertNil(parseTag(from: "<a/ >"))
         XCTAssertNil(parseTag(from: "< a/>"))
     }
     
     func testTagNameParsing() {
-        XCTAssertEqual("button", parseTag(from: "<button>")?.tagName)
-        XCTAssertEqual("button123", parseTag(from: "<button123>")?.tagName)
-        XCTAssertEqual("button", parseTag(from: "<BUTTON>")?.tagName)
+        XCTAssertEqual("button", parseTag(from: "<button>")?.tagName ?? "")
+        XCTAssertEqual("button123", parseTag(from: "<button123>")?.tagName ?? "")
+        XCTAssertEqual("button", parseTag(from: "<BUTTON>")?.tagName ?? "")
         XCTAssertNil(parseTag(from: "<button!>"))
         XCTAssertNil(parseTag(from: "<but!ton>"))
         XCTAssertNil(parseTag(from: "<кнопка>"))
     }
     
     func testClassAttributeParsing() {
-        guard let tag = parseTag(from: "<div class=\"Bold color-red    text\">") else {
+        guard let tag = parseTag(from: "<div class=\"Bold color-red    text\">") as? HTMLStartTag else {
             XCTFail("Expected a HTMLTag at this point")
             return
         }
@@ -87,7 +87,7 @@ class HTMLTagParserTests: XCTestCase {
     }
     
     func testIdAttributeParsing() {
-        guard let tag = parseTag(from: "<div id=\"awesomeTag\">") else {
+        guard let tag = parseTag(from: "<div id=\"awesomeTag\">") as? HTMLStartTag else {
             XCTFail("Expected a HTMLTag at this point")
             return
         }
@@ -102,8 +102,8 @@ class HTMLTagParserTests: XCTestCase {
     }
     
     func testSingleQuotedAttributeParsing() {
-        guard let tag = parseTag(from: "<div id='awesomeTag'>") else {
-            XCTFail("Expected a HTMLTag at this point")
+        guard let tag = parseTag(from: "<div id='awesomeTag'>") as? HTMLStartTag else {
+            XCTFail("Expected a HTMLStartTag at this point")
             return
         }
         
@@ -111,8 +111,8 @@ class HTMLTagParserTests: XCTestCase {
     }
     
     func testUnquotedAttributeParsing() {
-        guard let tag = parseTag(from: "<div id=awesomeTag>") else {
-            XCTFail("Expected a HTMLTag at this point")
+        guard let tag = parseTag(from: "<div id=awesomeTag>") as? HTMLStartTag else {
+            XCTFail("Expected a HTMLStartTag at this point")
             return
         }
         
@@ -120,8 +120,8 @@ class HTMLTagParserTests: XCTestCase {
     }
     
     func testUnquotedAttributeParsingInSelfClosingTag() {
-        guard let tag = parseTag(from: "<div id=awesomeTag/>") else {
-            XCTFail("Expected a HTMLTag at this point")
+        guard let tag = parseTag(from: "<div id=awesomeTag/>") as? HTMLSelfClosingTag else {
+            XCTFail("Expected a HTMLSelfClosingTag at this point")
             return
         }
         
@@ -129,8 +129,8 @@ class HTMLTagParserTests: XCTestCase {
     }
     
     func testAttributeParsingWithoutValue() {
-        guard let tag = parseTag(from: "<input type=\"checkbox\" disabled id=\"awesomeTag\" />") else {
-            XCTFail("Expected a HTMLTag at this point")
+        guard let tag = parseTag(from: "<input type=\"checkbox\" disabled id=\"awesomeTag\" />") as? HTMLSelfClosingTag else {
+            XCTFail("Expected a HTMLSelfClosingTag at this point")
             return
         }
         

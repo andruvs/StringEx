@@ -12,9 +12,9 @@ import XCTest
 class HTMLTagTests: XCTestCase {
 
     func testEquality() {
-        XCTAssertEqual(HTMLTag(type: .startTag, tagName: "a"), HTMLTag(type: .startTag, tagName: "a"))
-        XCTAssertEqual(HTMLTag(type: .startTag, tagName: "a"), HTMLTag(type: .startTag, tagName: "A"))
-        XCTAssertNotEqual(HTMLTag(type: .startTag, tagName: "a"), HTMLTag(type: .startTag, tagName: "b"))
+        XCTAssertEqual(HTMLTag(tagName: "a"), HTMLTag(tagName: "a"))
+        XCTAssertEqual(HTMLTag(tagName: "a"), HTMLTag(tagName: "A"))
+        XCTAssertNotEqual(HTMLTag(tagName: "a"), HTMLTag(tagName: "b"))
     }
 
 }
