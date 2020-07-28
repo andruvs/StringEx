@@ -9,10 +9,10 @@
 import XCTest
 @testable import StringEx
 
-class StringExTests: XCTestCase {
+class StringExStringTests: XCTestCase {
 
     func getString(_ str: String, _ sel: StringSelector) -> String {
-        return str.ex()[sel].string
+        return str.ex()[sel].selectedString
     }
 
     func getReplacedRawString(_ str: String, _ sel: StringSelector, _ mode: RangeConversionMode) -> String {
@@ -22,6 +22,8 @@ class StringExTests: XCTestCase {
     func testSelectAll() {
         XCTAssertEqual("1234567890", getString("1234567890", .all))
         XCTAssertEqual("12345", getString("<a>12345</a>67890", .tag("a") => .all))
+        XCTAssertEqual("12🐶34567890", getString("12🐶34567890", .all))
+        XCTAssertEqual("45", getString("12🐶3<a>45</a>67890", .tag("a") => .all))
     }
     
     func testSelectTag() {
@@ -31,6 +33,7 @@ class StringExTests: XCTestCase {
         XCTAssertEqual("", getString("12345678<a/>90", .tag("a")))
         XCTAssertEqual("150", getString("<a>1</a>234<a>5</a>6789<a>0</a>", .tag("a")))
         XCTAssertEqual("345", getString("12<a>34<a>5</a></a>67890", .tag("a")))
+        XCTAssertEqual("34🐶5🐶", getString("12🐶<a>34🐶<a>5🐶</a></a>67890", .tag("a")))
     }
     
     func testSelectTagByClass() {
@@ -40,6 +43,7 @@ class StringExTests: XCTestCase {
         XCTAssertEqual("", getString("12345678<a class=\"test\" />90", .class("test")))
         XCTAssertEqual("150", getString("<a class=\"test\">1</a>234<a class=\"test\">5</a>6789<a class=\"test\">0</a>", .class("test")))
         XCTAssertEqual("345", getString("12<a class=\"test\">34<a class=\"test\">5</a></a>67890", .class("test")))
+        XCTAssertEqual("34🐶5🐶", getString("12🐶<a class=\"test\">34🐶<a class=\"test\">5🐶</a></a>67890", .class("test")))
     }
     
     func testSelectTagById() {
@@ -49,6 +53,7 @@ class StringExTests: XCTestCase {
         XCTAssertEqual("", getString("12345678<a id=\"test\" />90", .id("test")))
         XCTAssertEqual("150", getString("<a id=\"test\">1</a>234<a id=\"test\">5</a>6789<a id=\"test\">0</a>", .id("test")))
         XCTAssertEqual("345", getString("12<a id=\"test\">34<a id=\"test\">5</a></a>67890", .id("test")))
+        XCTAssertEqual("34🐶5🐶", getString("12🐶<a id=\"test\">34🐶<a id=\"test\">5🐶</a></a>67890", .id("test")))
     }
     
     func testSelectRange() {
@@ -56,6 +61,7 @@ class StringExTests: XCTestCase {
         XCTAssertEqual("456", getString("1234<a>5</a>67890", .range(3..<6)))
         XCTAssertEqual("67890", getString("1234567890", .range(5..<Int.max)))
         XCTAssertEqual("45🐶", getString("12345🐶67890", .range(3..<6)))
+        XCTAssertEqual("45🐶", getString("1🐶2345🐶67890", .range(4..<7)))
     }
     
     func testSelectUnion() {
