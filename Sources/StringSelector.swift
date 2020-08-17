@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum StringSelector {
+public enum StringSelector: Hashable {
     case all
     case tag(_ tagName: String)
     case `class`(_ class: String)

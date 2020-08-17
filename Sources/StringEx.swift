@@ -20,6 +20,8 @@ public class StringEx {
     
     private var resultAttributedString: NSMutableAttributedString
     
+    public var useStyleManager = false
+    
     public init(string: String) {
         let parser = HTMLParser(source: string)
         parser.parse()
@@ -91,6 +93,7 @@ extension StringEx {
     }
     
     var attributedString: NSAttributedString {
+        applyManagerStyles()
         return NSAttributedString(attributedString: resultAttributedString)
     }
     
@@ -104,14 +107,50 @@ extension StringEx {
     }
     
     public func selectedAttributedString(separator: String) -> NSAttributedString {
-        guard let results = selectorResults else {
+        guard let ranges = selectedNSRanges() else {
             return NSAttributedString()
         }
         
-        let ranges = results.map { $0.range }
-        let combinedRanges = ranges.combinedRanges()
+        applyManagerStyles()
         
         var parts = [NSAttributedString]()
+        
+        for range in ranges {
+            parts.append(resultAttributedString.attributedSubstring(from: range))
+        }
+        
+        let attributedString = NSMutableAttributedString()
+        let attributedSeparator = NSAttributedString(string: separator)
+        var first = true
+        
+        for part in parts {
+            if first {
+                first = false
+            } else {
+                attributedString.append(attributedSeparator)
+            }
+            attributedString.append(part)
+        }
+        
+        return attributedString
+    }
+    
+}
+
+// Mark: Utils
+
+extension StringEx {
+    
+    private func selectedNSRanges() -> [NSRange]? {
+        
+        guard let results = selectorResults else {
+            return nil
+        }
+        
+        var resultRanges = [NSRange]()
+        
+        let ranges = results.map { $0.range }
+        let combinedRanges = ranges.combinedRanges()
         
         var index = resultString.startIndex
         var offset = 0
@@ -134,26 +173,21 @@ extension StringEx {
                 indexUTF16 = upperBoundUTF16
                 offsetUTF16 = location + length
                 
-                parts.append(resultAttributedString.attributedSubstring(from: NSRange(location: location, length: length)))
+                resultRanges.append(NSRange(location: location, length: length))
             }
         }
         
-        let attributedString = NSMutableAttributedString()
-        let attributedSeparator = NSAttributedString(string: separator)
-        var first = true
-        
-        for part in parts {
-            if first {
-                first = false
-            } else {
-                attributedString.append(attributedSeparator)
-            }
-            attributedString.append(part)
-        }
-        
-        return attributedString
+        return resultRanges
     }
     
+    private func applyManagerStyles() {
+        if useStyleManager {
+            clearStyles()
+            if let styles = StyleManager.shared.styles {
+                style(styles)
+            }
+        }
+    }
 }
 
 // Mark: Modifiers
@@ -276,6 +310,21 @@ extension StringEx {
 extension StringEx {
     
     @discardableResult
+    public func style(_ stylesheet: Stylesheet) -> Self {
+        return self.style([stylesheet])
+    }
+    
+    @discardableResult
+    public func style(_ stylesheets: [Stylesheet]) -> Self {
+        
+        for stylesheet in stylesheets {
+            self[stylesheet.selector].style(stylesheet.styles)
+        }
+        
+        return self
+    }
+    
+    @discardableResult
     public func style(_ style: Style) -> Self {
         return self.style([style])
     }
@@ -283,7 +332,7 @@ extension StringEx {
     @discardableResult
     public func style(_ styles: [Style]) -> Self {
         
-        guard let results = selectorResults else {
+        guard let ranges = selectedNSRanges() else {
             return self
         }
         
@@ -392,31 +441,25 @@ extension StringEx {
             attributes[.paragraphStyle] = paragraphStyle
         }
         
-        let ranges = results.map { $0.range }
-        let combinedRanges = ranges.combinedRanges()
+        for range in ranges {
+            resultAttributedString.addAttributes(attributes, range: range)
+        }
         
-        var index = resultString.startIndex
-        var offset = 0
-        
-        let utf16 = resultString.utf16
-        var indexUTF16 = utf16.startIndex
-        var offsetUTF16 = 0
-        
-        for range in combinedRanges {
-            let lowerBound = resultString.index(index, offsetBy: range.lowerBound - offset)
-            let upperBound = resultString.index(lowerBound, offsetBy: range.upperBound - range.lowerBound)
+        return self
+    }
+    
+    @discardableResult
+    public func clearStyles() -> Self {
+        switch selector {
+        case .all:
+            resultAttributedString = NSMutableAttributedString(string: resultString)
+        default:
+            guard let ranges = selectedNSRanges() else {
+                return self
+            }
             
-            index = upperBound
-            offset = range.upperBound
-            
-            if let lowerBoundUTF16 = lowerBound.samePosition(in: utf16), let upperBoundUTF16 = upperBound.samePosition(in: utf16) {
-                let location = utf16.distance(from: indexUTF16, to: lowerBoundUTF16) + offsetUTF16
-                let length = utf16.distance(from: lowerBoundUTF16, to: upperBoundUTF16)
-                
-                indexUTF16 = upperBoundUTF16
-                offsetUTF16 = location + length
-                
-                resultAttributedString.addAttributes(attributes, range: NSRange(location: location, length: length))
+            for range in ranges {
+                resultAttributedString.setAttributes([:], range: range)
             }
         }
         

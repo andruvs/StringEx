@@ -11,6 +11,9 @@
 		CA19541924C735B3000DE926 /* NSAttributedString+StringEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA19541824C735B3000DE926 /* NSAttributedString+StringEx.swift */; };
 		CA19541B24C736B0000DE926 /* StringExOperatorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA19541A24C736B0000DE926 /* StringExOperatorsTests.swift */; };
 		CA33ED3023916583004EDBBC /* SelectorFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA33ED2F23916583004EDBBC /* SelectorFilter.swift */; };
+		CA39C32A24DC608A000D672F /* StringSelectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39C32924DC608A000D672F /* StringSelectorTests.swift */; };
+		CA39C32C24E31A34000D672F /* Stylesheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39C32B24E31A34000D672F /* Stylesheet.swift */; };
+		CA39C32E24E31D29000D672F /* StyleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39C32D24E31D29000D672F /* StyleManager.swift */; };
 		CA3F204D24C865E20035217F /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F204C24C865E20035217F /* Style.swift */; };
 		CA3F204F24C976960035217F /* StringExStylingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F204E24C976960035217F /* StringExStylingTests.swift */; };
 		CA43AE162458AC4F00AB4CF5 /* HTMLAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA43AE152458AC4F00AB4CF5 /* HTMLAttribute.swift */; };
@@ -58,6 +61,9 @@
 		CA19541824C735B3000DE926 /* NSAttributedString+StringEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+StringEx.swift"; sourceTree = "<group>"; };
 		CA19541A24C736B0000DE926 /* StringExOperatorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExOperatorsTests.swift; sourceTree = "<group>"; };
 		CA33ED2F23916583004EDBBC /* SelectorFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectorFilter.swift; sourceTree = "<group>"; };
+		CA39C32924DC608A000D672F /* StringSelectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSelectorTests.swift; sourceTree = "<group>"; };
+		CA39C32B24E31A34000D672F /* Stylesheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stylesheet.swift; sourceTree = "<group>"; };
+		CA39C32D24E31D29000D672F /* StyleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleManager.swift; sourceTree = "<group>"; };
 		CA3F204C24C865E20035217F /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		CA3F204E24C976960035217F /* StringExStylingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExStylingTests.swift; sourceTree = "<group>"; };
 		CA43AE152458AC4F00AB4CF5 /* HTMLAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLAttribute.swift; sourceTree = "<group>"; };
@@ -159,6 +165,8 @@
 				CACDABD62462F64B00167623 /* HTMLTagStorage.swift */,
 				CA88D17A24ACCBE600E79798 /* RangeConverter.swift */,
 				CA3F204C24C865E20035217F /* Style.swift */,
+				CA39C32B24E31A34000D672F /* Stylesheet.swift */,
+				CA39C32D24E31D29000D672F /* StyleManager.swift */,
 				CAE4507E248D1F0100284777 /* Array+StringEx.swift */,
 				CA88D17C24AF74AD00E79798 /* String+StringEx.swift */,
 				CA19541824C735B3000DE926 /* NSAttributedString+StringEx.swift */,
@@ -180,6 +188,7 @@
 				CA9AA6692469DA6100C2C2CF /* HTMLAttributeTests.swift */,
 				CAF7D630246C2D3D000238A3 /* HTMLParserTests.swift */,
 				CAE45080248D1F5100284777 /* Array+StringExTests.swift */,
+				CA39C32924DC608A000D672F /* StringSelectorTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -359,9 +368,11 @@
 				CA626612244DECBC0050C3A4 /* HTMLTagParser.swift in Sources */,
 				CAE4507D24842DA200284777 /* HTMLTagPair.swift in Sources */,
 				CA43AE162458AC4F00AB4CF5 /* HTMLAttribute.swift in Sources */,
+				CA39C32E24E31D29000D672F /* StyleManager.swift in Sources */,
 				CA88D17D24AF74AD00E79798 /* String+StringEx.swift in Sources */,
 				CACDABD72462F64B00167623 /* HTMLTagStorage.swift in Sources */,
 				CA7E596D2472B02D007F8245 /* SelectorResult.swift in Sources */,
+				CA39C32C24E31A34000D672F /* Stylesheet.swift in Sources */,
 				CA19541924C735B3000DE926 /* NSAttributedString+StringEx.swift in Sources */,
 				CA33ED3023916583004EDBBC /* SelectorFilter.swift in Sources */,
 			);
@@ -374,6 +385,7 @@
 				CA54C530239117EA00282E21 /* StringExStringTests.swift in Sources */,
 				CAF7D631246C2D3D000238A3 /* HTMLParserTests.swift in Sources */,
 				CA72AE2B24C1E27000F06169 /* StringExAttributedStringTests.swift in Sources */,
+				CA39C32A24DC608A000D672F /* StringSelectorTests.swift in Sources */,
 				CA9AA66824658EF900C2C2CF /* HTMLTagParserTests.swift in Sources */,
 				CAE45081248D1F5100284777 /* Array+StringExTests.swift in Sources */,
 				CA19541B24C736B0000DE926 /* StringExOperatorsTests.swift in Sources */,
