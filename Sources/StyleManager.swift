@@ -34,6 +34,10 @@ public class StyleManager {
         themes[theme] = styles
     }
     
+    public func clear() {
+        themes.removeAll()
+    }
+    
     public func use(_ theme: String) {
         self.theme = theme
     }

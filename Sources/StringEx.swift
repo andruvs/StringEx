@@ -182,7 +182,7 @@ extension StringEx {
     
     private func applyManagerStyles() {
         if useStyleManager {
-            clearStyles()
+            select(.all).clearStyles()
             if let styles = StyleManager.shared.styles {
                 style(styles)
             }
@@ -196,12 +196,12 @@ extension StringEx {
     
     @discardableResult
     public func replace(with replace: String, mode: RangeConversionMode = .outer) -> Self {
-        return self.replace(with: replace.ex(), mode: mode)
+        return self.replace(with: replace.ex, mode: mode)
     }
     
     @discardableResult
     public func replace(with replace: NSAttributedString, mode: RangeConversionMode = .outer) -> Self {
-        return self.replace(with: replace.ex(), mode: mode)
+        return self.replace(with: replace.ex, mode: mode)
     }
     
     @discardableResult
@@ -350,7 +350,11 @@ extension StringEx {
             case .kern(let value):
                 attributes[.kern] = value
             case .linkString(let string):
-                attributes[.link] = string
+                if let string = string {
+                    attributes[.link] = URL(string: string)
+                } else {
+                    attributes[.link] = nil
+                }
             case .linkUrl(let url):
                 attributes[.link] = url
             case .shadow(let shadow):
@@ -368,11 +372,11 @@ extension StringEx {
                             style = style | s.rawValue
                         }
                     }
-                    attributes[.strikethroughStyle] = styles
+                    attributes[.strikethroughStyle] = style
                     attributes[.strikethroughColor] = color
                 }
             case .underlineStyle(let style, let color):
-                attributes[.underlineStyle] = style
+                attributes[.underlineStyle] = style.rawValue
                 attributes[.underlineColor] = color
             case .underlineStyles(let styles, let color):
                 if styles.count > 0 {
@@ -384,8 +388,8 @@ extension StringEx {
                             style = style | s.rawValue
                         }
                     }
-                    attributes[.underlineStyle] = styles
-                    attributes[.underlineStyle] = color
+                    attributes[.underlineStyle] = style
+                    attributes[.underlineColor] = color
                 }
             case .strokeWidth(let width, let color):
                 attributes[.strokeWidth] = width

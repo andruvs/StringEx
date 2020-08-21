@@ -12,11 +12,11 @@ import XCTest
 class StringExStringTests: XCTestCase {
 
     func getString(_ str: String, _ sel: StringSelector) -> String {
-        return str.ex()[sel].selectedString
+        return str.ex[sel].selectedString
     }
 
     func getReplacedRawString(_ str: String, _ sel: StringSelector, _ mode: RangeConversionMode) -> String {
-        return str.ex()[sel].replace(with: "_", mode: mode).rawString
+        return str.ex[sel].replace(with: "_", mode: mode).rawString
     }
     
     func testSelectAll() {

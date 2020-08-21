@@ -12,11 +12,11 @@ import XCTest
 class StringExAttributedStringTests: XCTestCase {
 
     func getString(_ str: String, _ sel: StringSelector) -> String {
-        return str.ex()[sel].selectedAttributedString.string
+        return str.ex[sel].selectedAttributedString.string
     }
 
     func getReplacedString(_ str: String, _ sel: StringSelector) -> String {
-        return str.ex()[sel].replace(with: "_").attributedString.string
+        return str.ex[sel].replace(with: "_").attributedString.string
     }
     
     func testSelectAll() {

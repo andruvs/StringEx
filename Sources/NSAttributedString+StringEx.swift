@@ -10,7 +10,7 @@ import Foundation
 
 extension NSAttributedString {
     
-    public func ex() -> StringEx {
+    var ex: StringEx {
         return StringEx(attributedString: self)
     }
     

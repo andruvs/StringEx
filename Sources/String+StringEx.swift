@@ -10,7 +10,7 @@ import Foundation
 
 extension String {
     
-    public func ex() -> StringEx {
+    var ex: StringEx {
         return StringEx(string: self)
     }
     

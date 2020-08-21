@@ -31,15 +31,15 @@ public enum Style {
     case shadow(_ shadow: NSShadow?)
     
     // The line through style
-    case lineThroughStyle(_ style: NSUnderlineStyle, color: UIColor?)
-    case lineThroughStyles(_ styles: [NSUnderlineStyle], color: UIColor?)
+    case lineThroughStyle(_ style: NSUnderlineStyle, color: UIColor? = nil)
+    case lineThroughStyles(_ styles: [NSUnderlineStyle], color: UIColor? = nil)
     
     // The underline style
-    case underlineStyle(_ style: NSUnderlineStyle, color: UIColor?)
-    case underlineStyles(_ styles: [NSUnderlineStyle], color: UIColor?)
+    case underlineStyle(_ style: NSUnderlineStyle, color: UIColor? = nil)
+    case underlineStyles(_ styles: [NSUnderlineStyle], color: UIColor? = nil)
     
     // The stroke of the selected text
-    case strokeWidth(_ width: Double, color: UIColor?)
+    case strokeWidth(_ width: Double, color: UIColor? = nil)
     
     // The character’s offset from the baseline, in points
     case baselineOffset(_ value: Double)
