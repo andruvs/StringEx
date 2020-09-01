@@ -8,11 +8,15 @@
 
 import Foundation
 
+extension NSRegularExpression.Options: Hashable {}
+
 public enum StringSelector: Hashable {
     case all
     case tag(_ tagName: String)
     case `class`(_ class: String)
     case id(_ id: String)
+    case string(_ string: String, caseInsensitive: Bool = true)
+    case regex(_ pattern: String, options: NSRegularExpression.Options = [])
     case range(_ range: Range<Int>)
     
     indirect case filter(_ selector: Self, filter: Filter)

@@ -56,6 +56,25 @@ class StringExStringTests: XCTestCase {
         XCTAssertEqual("34🐶5🐶", getString("12🐶<a id=\"test\">34🐶<a id=\"test\">5🐶</a></a>67890", .id("test")))
     }
     
+    func testSelectStringCaseInsensitive() {
+        XCTAssertEqual("HellohelloHELLOhello", getString("Hello, World! hello, world!HELLOhello", .string("HeLLo")))
+        XCTAssertEqual("aAaA", getString("aAaA", .string("a")))
+        XCTAssertEqual("🐶🐶", getString("1🐶2345🐶67890", .string("🐶")))
+        XCTAssertEqual("Hello, World!", getString("text text <span>text🐶 Hello, World!</span> text hello, world! text", .tag("span") => .string("hello, world!")))
+    }
+    
+    func testSelectStringCaseSensitive() {
+        XCTAssertEqual("hellohello", getString("Hello, World! hello, world!HELLOhello", .string("hello", caseInsensitive: false)))
+        XCTAssertEqual("aa", getString("aAaA", .string("a", caseInsensitive: false)))
+    }
+    
+    func testSelectRegex() {
+        let emailPattern = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        XCTAssertEqual("test@domain.com", getString("🐶Test E-mail: test@domain.com!", .regex(emailPattern)))
+        XCTAssertEqual("test@domain.comtest2@domain.ru", getString("🐶Test E-mail: test@domain.com and test2@domain.ru", .regex(emailPattern)))
+        XCTAssertEqual("test@domain.com", getString("🐶<span>The first E-mail🐶: test@domain.com</span>, the second Email: test2@domain.ru", .tag("span") => .regex(emailPattern)))
+    }
+    
     func testSelectRange() {
         XCTAssertEqual("456", getString("1234567890", .range(3..<6)))
         XCTAssertEqual("456", getString("1234<a>5</a>67890", .range(3..<6)))

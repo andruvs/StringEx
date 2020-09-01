@@ -527,6 +527,55 @@ extension StringEx {
                     results.append(SelectorResult(range: range, tag: tagPair))
                 }
             }
+        case .string(let string, let caseInsensitive):
+            if !string.isEmpty && !resultString.isEmpty {
+                var tagPair: HTMLTagPair?
+                var searchStartIndex = resultString.startIndex
+                var searchEndIndex = resultString.endIndex
+                if let parent = parent {
+                    searchStartIndex = resultString.index(resultString.startIndex, offsetBy: parent.range.lowerBound)
+                    searchEndIndex = resultString.index(searchStartIndex, offsetBy: parent.range.upperBound - parent.range.lowerBound)
+                    tagPair = parent.tag
+                }
+                var index = resultString.startIndex
+                var offset = 0
+                while searchStartIndex < searchEndIndex, let range = resultString.range(of: string, options: caseInsensitive ? .caseInsensitive : [], range: searchStartIndex..<searchEndIndex, locale: nil), !range.isEmpty {
+                    let lowerBound = resultString.distance(from: index, to: range.lowerBound) + offset
+                    let upperBound = resultString.distance(from: range.lowerBound, to: range.upperBound) + lowerBound
+                    index = range.upperBound
+                    offset = upperBound
+                    results.append(SelectorResult(range: lowerBound..<upperBound, tag: tagPair))
+                    searchStartIndex = range.upperBound
+                }
+            }
+        case .regex(let pattern, let options):
+            if !pattern.isEmpty && !resultString.isEmpty {
+                if let regex = try? NSRegularExpression(pattern: pattern, options: options) {
+                    var tagPair: HTMLTagPair?
+                    var searchStartIndex = resultString.startIndex
+                    var searchEndIndex = resultString.endIndex
+                    if let parent = parent {
+                        searchStartIndex = resultString.index(resultString.startIndex, offsetBy: parent.range.lowerBound)
+                        searchEndIndex = resultString.index(searchStartIndex, offsetBy: parent.range.upperBound - parent.range.lowerBound)
+                        tagPair = parent.tag
+                    }
+                    let utf16 = resultString.utf16
+                    if let startIndexUTF16 = searchStartIndex.samePosition(in: utf16), let endIndexUTF16 = searchEndIndex.samePosition(in: utf16) {
+                        let searchRange = NSMakeRange(utf16.distance(from: utf16.startIndex, to: startIndexUTF16), utf16.distance(from: startIndexUTF16, to: endIndexUTF16))
+                        var index = resultString.startIndex
+                        var offset = 0
+                        regex.enumerateMatches(in: resultString, options: [], range: searchRange) { result, _, _ in
+                            if let result = result, let range = Range(result.range, in: resultString) {
+                                let lowerBound = resultString.distance(from: index, to: range.lowerBound) + offset
+                                let upperBound = resultString.distance(from: range.lowerBound, to: range.upperBound) + lowerBound
+                                index = range.upperBound
+                                offset = upperBound
+                                results.append(SelectorResult(range: lowerBound..<upperBound, tag: tagPair))
+                            }
+                        }
+                    }
+                }
+            }
         case .range(let range):
             let resultRange: Range<Int>
             let tagPair: HTMLTagPair?
