@@ -422,6 +422,15 @@ class StringExStringTests: XCTestCase {
         XCTAssertEqual("1234<b></b><c>_78</c>90", getReplacedRawString("1234<b/><c><d>56</d>78</c>90", sel, .outer))
         XCTAssertEqual("1234<b></b><c><d>_</d>78</c>90", getReplacedRawString("1234<b/><c><d>56</d>78</c>90", sel, .inner))
     }
+    
+    func testFilter() {
+        let string = "<b>1</b><b>2</b><b>3</b><b>4</b><b>5</b><b>6</b><b>7</b><b>8</b><b>9</b><b>0</b>"
+        XCTAssertEqual("1", getString(string, .tag("b") % .first))
+        XCTAssertEqual("0", getString(string, .tag("b") % .last))
+        XCTAssertEqual("4", getString(string, .tag("b") % .eq(3)))
+        XCTAssertEqual("13579", getString(string, .tag("b") % .even))
+        XCTAssertEqual("24680", getString(string, .tag("b") % .odd))
+    }
 
     func testPerformanceExample() {
         let bundle = Bundle(for: type(of: self))

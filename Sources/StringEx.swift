@@ -598,8 +598,25 @@ extension StringEx {
             for selector in selectors {
                 results.append(contentsOf: execute(selector))
             }
-        case .filter(let selectors, let filter):
-            print(selectors, filter)
+        case .filter(let selector, let filter):
+            var selectorResults = execute(selector)
+            if !selectorResults.isEmpty {
+                selectorResults.sort { $0.range.lowerBound < $1.range.lowerBound }
+                switch filter {
+                case .first:
+                    results.append(selectorResults.first!)
+                case .last:
+                    results.append(selectorResults.last!)
+                case .eq(let index):
+                    if index >= 0 && index < selectorResults.count {
+                        results.append(selectorResults[index])
+                    }
+                case .even:
+                    results.append(contentsOf: selectorResults.enumerated().compactMap { $0 % 2 == 0 ? $1 : nil })
+                case .odd:
+                    results.append(contentsOf: selectorResults.enumerated().compactMap { $0 % 2 != 0 ? $1 : nil })
+                }
+            }
         }
         
         return results

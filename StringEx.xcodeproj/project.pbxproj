@@ -10,7 +10,6 @@
 		CA1519EA244F1069005E8F76 /* HTMLTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1519E9244F1069005E8F76 /* HTMLTag.swift */; };
 		CA19541924C735B3000DE926 /* NSAttributedString+StringEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA19541824C735B3000DE926 /* NSAttributedString+StringEx.swift */; };
 		CA19541B24C736B0000DE926 /* StringExOperatorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA19541A24C736B0000DE926 /* StringExOperatorsTests.swift */; };
-		CA33ED3023916583004EDBBC /* SelectorFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA33ED2F23916583004EDBBC /* SelectorFilter.swift */; };
 		CA39C32A24DC608A000D672F /* StringSelectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39C32924DC608A000D672F /* StringSelectorTests.swift */; };
 		CA39C32C24E31A34000D672F /* Stylesheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39C32B24E31A34000D672F /* Stylesheet.swift */; };
 		CA39C32E24E31D29000D672F /* StyleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39C32D24E31D29000D672F /* StyleManager.swift */; };
@@ -61,7 +60,6 @@
 		CA1519E9244F1069005E8F76 /* HTMLTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLTag.swift; sourceTree = "<group>"; };
 		CA19541824C735B3000DE926 /* NSAttributedString+StringEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+StringEx.swift"; sourceTree = "<group>"; };
 		CA19541A24C736B0000DE926 /* StringExOperatorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExOperatorsTests.swift; sourceTree = "<group>"; };
-		CA33ED2F23916583004EDBBC /* SelectorFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectorFilter.swift; sourceTree = "<group>"; };
 		CA39C32924DC608A000D672F /* StringSelectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSelectorTests.swift; sourceTree = "<group>"; };
 		CA39C32B24E31A34000D672F /* Stylesheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stylesheet.swift; sourceTree = "<group>"; };
 		CA39C32D24E31D29000D672F /* StyleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleManager.swift; sourceTree = "<group>"; };
@@ -158,7 +156,6 @@
 				CAF7D632246C31DB000238A3 /* StringSelector.swift */,
 				CAF7D634246C32A3000238A3 /* Filter.swift */,
 				CA7E596C2472B02D007F8245 /* SelectorResult.swift */,
-				CA33ED2F23916583004EDBBC /* SelectorFilter.swift */,
 				CA62660F244DDBF90050C3A4 /* HTMLParser.swift */,
 				CA626611244DECBC0050C3A4 /* HTMLTagParser.swift */,
 				CA1519E9244F1069005E8F76 /* HTMLTag.swift */,
@@ -377,7 +374,6 @@
 				CA7E596D2472B02D007F8245 /* SelectorResult.swift in Sources */,
 				CA39C32C24E31A34000D672F /* Stylesheet.swift in Sources */,
 				CA19541924C735B3000DE926 /* NSAttributedString+StringEx.swift in Sources */,
-				CA33ED3023916583004EDBBC /* SelectorFilter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
