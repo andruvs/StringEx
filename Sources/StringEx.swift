@@ -696,22 +696,22 @@ extension StringEx {
 extension StringEx {
     
     static func +(lhs: StringEx, rhs: StringEx) -> StringEx {
-        return lhs[.range(Int.max..<Int.max)].replace(with: rhs)
+        return lhs[.range(Int.max..<Int.max)].replace(with: rhs).select(.all)
     }
     
     static func +(lhs: StringEx, rhs: String) -> StringEx {
-        return lhs[.range(Int.max..<Int.max)].replace(with: rhs)
+        return lhs[.range(Int.max..<Int.max)].replace(with: rhs).select(.all)
     }
     
     static func +(lhs: String, rhs: StringEx) -> StringEx {
-        return rhs[.range(0..<0)].replace(with: lhs)
+        return rhs[.range(0..<0)].replace(with: lhs).select(.all)
     }
     
     static func +(lhs: StringEx, rhs: NSAttributedString) -> StringEx {
-        return lhs[.range(Int.max..<Int.max)].replace(with: rhs)
+        return lhs[.range(Int.max..<Int.max)].replace(with: rhs).select(.all)
     }
     
     static func +(lhs: NSAttributedString, rhs: StringEx) -> StringEx {
-        return rhs[.range(0..<0)].replace(with: lhs)
+        return rhs[.range(0..<0)].replace(with: lhs).select(.all)
     }
 }
