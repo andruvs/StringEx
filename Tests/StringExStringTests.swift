@@ -431,6 +431,29 @@ class StringExStringTests: XCTestCase {
         XCTAssertEqual("13579", getString(string, .tag("b") % .even))
         XCTAssertEqual("24680", getString(string, .tag("b") % .odd))
     }
+    
+    func testPrepend() {
+        XCTAssertEqual("123<span>!456</span>7890", "123<span>456</span>7890".ex[.tag("span")].prepend("!").rawString)
+        XCTAssertEqual("!1234567890", "1234567890".ex.prepend("!").rawString)
+        XCTAssertEqual("1234567890!", "1234567890".ex[.range(Int.max..<Int.max)].prepend("!").rawString)
+    }
+    
+    func testAppend() {
+        XCTAssertEqual("123<span>456!</span>7890", "123<span>456</span>7890".ex[.tag("span")].append("!").rawString)
+        XCTAssertEqual("1234567890!", "1234567890".ex.append("!").rawString)
+        XCTAssertEqual("!1234567890", "1234567890".ex[.range(0..<0)].append("!").rawString)
+    }
+    
+    func testInsert() {
+        XCTAssertEqual("123<span>4!56</span>7890", "123<span>456</span>7890".ex[.tag("span")].insert("!", at: 1).rawString)
+        XCTAssertEqual("1!234567890", "1234567890".ex.insert("!", at: 1).rawString)
+    }
+    
+    func testRestoreSelector() {
+        XCTAssertEqual("123<span>!</span>7890", "123<span>456</span>7890".ex[.tag("span")].replace(with: "?").replace(with: "!").rawString)
+        XCTAssertEqual("123<span>!?456</span>7890", "123<span>456</span>7890".ex[.tag("span")].prepend("?").prepend("!").rawString)
+        XCTAssertEqual("123<span>456?!</span>7890", "123<span>456</span>7890".ex[.tag("span")].append("?").append("!").rawString)
+    }
 
     func testPerformanceExample() {
         let bundle = Bundle(for: type(of: self))

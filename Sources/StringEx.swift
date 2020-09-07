@@ -17,6 +17,7 @@ public class StringEx {
     
     private var storage: HTMLTagStorage
     private var selectorResults: [SelectorResult]?
+    private var restoreSelectorResults: Bool = true
     
     private var resultAttributedString: NSMutableAttributedString
     
@@ -301,6 +302,73 @@ extension StringEx {
         resultString = parser.resultString
         storage = parser.storage
         
+        // Restore selector results
+        if restoreSelectorResults {
+            _ = select(selector)
+        } else {
+            restoreSelectorResults = true
+        }
+        
+        return self
+    }
+    
+    @discardableResult
+    public func prepend(_ value: String) -> Self {
+        return prepend(value.ex)
+    }
+    
+    @discardableResult
+    public func prepend(_ value: NSAttributedString) -> Self {
+        return prepend(value.ex)
+    }
+    
+    @discardableResult
+    public func prepend(_ value: StringEx) -> Self {
+        let currentSelector = selector
+        _ = select(selector.select(.range(0..<0)))
+        restoreSelectorResults = false
+        self.replace(with: value)
+        _ = select(currentSelector)
+        return self
+    }
+    
+    @discardableResult
+    public func append(_ value: String) -> Self {
+        return append(value.ex)
+    }
+    
+    @discardableResult
+    public func append(_ value: NSAttributedString) -> Self {
+        return append(value.ex)
+    }
+    
+    @discardableResult
+    public func append(_ value: StringEx) -> Self {
+        let currentSelector = selector
+        _ = select(selector.select(.range(Int.max..<Int.max)))
+        restoreSelectorResults = false
+        self.replace(with: value)
+        _ = select(currentSelector)
+        return self
+    }
+    
+    @discardableResult
+    public func insert(_ value: String, at index: Int) -> Self {
+        return insert(value.ex, at: index)
+    }
+    
+    @discardableResult
+    public func insert(_ value: NSAttributedString, at index: Int) -> Self {
+        return insert(value.ex, at: index)
+    }
+    
+    @discardableResult
+    public func insert(_ value: StringEx, at index: Int) -> Self {
+        let currentSelector = selector
+        _ = select(selector.select(.range(index..<index)))
+        restoreSelectorResults = false
+        self.replace(with: value)
+        _ = select(currentSelector)
         return self
     }
 }
