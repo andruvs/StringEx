@@ -15,7 +15,7 @@ extension String: StyleManagerAcceptable {}
 
 public class StyleManager {
     
-    static let shared = StyleManager()
+    public static let shared = StyleManager()
     
     private init() {}
     
@@ -76,7 +76,7 @@ extension StyleManager {
 
 extension StyleManager {
 
-    subscript(theme: String) -> [StyleManagerAcceptable]? {
+    public subscript(theme: String) -> [StyleManagerAcceptable]? {
         get {
             themes[theme]
         }

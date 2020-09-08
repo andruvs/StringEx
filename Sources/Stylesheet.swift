@@ -12,12 +12,12 @@ public struct Stylesheet {
     let selector: StringSelector
     let styles: [Style]
     
-    init(selector: StringSelector, styles: [Style]) {
+    public init(selector: StringSelector, styles: [Style]) {
         self.selector = selector
         self.styles = styles
     }
     
-    init(selector: StringSelector, style: Style) {
+    public init(selector: StringSelector, style: Style) {
         self.init(selector: selector, styles: [style])
     }
 }

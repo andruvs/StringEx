@@ -55,7 +55,7 @@ public enum StringSelector: Hashable {
 
 infix operator =>: MultiplicationPrecedence
 
-extension StringSelector {
+public extension StringSelector {
     
     static func +(lhs: Self, rhs: Self) -> Self {
         return lhs.add(rhs)

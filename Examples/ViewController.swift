@@ -7,57 +7,31 @@
 //
 
 import UIKit
+import StringEx
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var label: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
-//        if let fileURL = Bundle.main.url(forResource:"example", withExtension: "htm") {
-//            let content = try! String(contentsOf: fileURL, encoding: .utf8) {
-//                
-//            }
-//        }
-//        
-//        func calculateTime(block : (() -> Void)) {
-//            let start = DispatchTime.now()
-//            block()
-//            let end = DispatchTime.now()
-//            let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
-//            let timeInterval = Double(nanoTime) / 1_000_000_000
-//            print("Time: \(timeInterval) seconds")
-//        }
+        let string = "Hello, <user />!"
+        let ex = string.ex
+
+        ex[.tag("user")]
+            .replace(with: "UserName")
+            .style([
+                .font(.boldSystemFont(ofSize: 20.0)),
+                .color(.red),
+                .underlineStyles([.single, .patternDot], color: .green)
+            ])
+
+        let attributedString = ex.attributedString
+
+        label.attributedText = attributedString
         
-//        calculateTime {
-//                let regex = try! NSRegularExpression(pattern: "<[^>]+>", options: [])
-//                regex.enumerateMatches(in: content, options: [], range: NSMakeRange(0, content.utf16.count)) { result, _, _ in
-//                    if let result = result {
-//                        let r = String(content[Range(result.range, in: content)!])
-//                        for utfCode in r {
-//
-//                        }
-//                        //print(content[Range(result.range, in: content)!])
-//                    }
-//                }
-//            }
-//
-//            let codePoint = UnicodeScalar(0x0A)
-//            print(codePoint == "\n")
-//
-//            calculateTime {
-//                let test = "<span class=\"redz\" ABSZZZZ>"
-//                //let range = UnicodeScalar(0x61)...UnicodeScalar(0x7A)
-//                let lowercase = UnicodeScalar("a")...UnicodeScalar("z")
-//                let uppercase = UnicodeScalar("A")...UnicodeScalar("Z")
-//
-//                for code in test.unicodeScalars {
-//                    if uppercase.contains(code) {
-//                        print(code)
-//                    }
-//                }
-//            }
-//    }
+        print("!!!")
     }
 
 

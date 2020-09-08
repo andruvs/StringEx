@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension String {
+public extension String {
     
     var ex: StringEx {
         return StringEx(string: self)
