@@ -23,4 +23,6 @@ let attributedString = ex.attributedString
 let label = UILabel()
 label.attributedText = attributedString
 ```
+As a result, we get something like:
 
+![StringEx Example](Documentation/images/example.png)
