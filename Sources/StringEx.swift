@@ -32,6 +32,8 @@ public class StringEx {
         storage = parser.storage
         
         resultAttributedString = NSMutableAttributedString(string: resultString)
+        
+        selectorResults = [SelectorResult(range: 0..<resultString.count, tag: nil)]
     }
     
     public init(attributedString: NSAttributedString) {
@@ -43,6 +45,8 @@ public class StringEx {
         storage = parser.storage
         
         resultAttributedString = NSMutableAttributedString(attributedString: attributedString)
+        
+        selectorResults = [SelectorResult(range: 0..<resultString.count, tag: nil)]
     }
     
 }

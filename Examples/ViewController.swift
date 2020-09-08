@@ -18,6 +18,8 @@ class ViewController: UIViewController {
         
         let string = "Hello, <user />!"
         let ex = string.ex
+        
+        ex.style(.color(.blue))
 
         ex[.tag("user")]
             .replace(with: "UserName")
