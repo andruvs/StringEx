@@ -1,4 +1,4 @@
-#StringEx
+# StringEx
 
 StringEx makes it easy to create `NSAttributedString` and manipulate `String`.
 
