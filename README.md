@@ -10,10 +10,12 @@ This simple example allows you to understand what the library actually does.
 let string = "Hello, <user />!"
 let ex = string.ex
 
+ex.style(.color(.blue))
+
 ex[.tag("user")]
     .replace(with: "UserName")
     .style([
-        .font(.boldSystemFont(ofSize: 12.0)),
+        .font(.boldSystemFont(ofSize: 17.0)),
         .color(.red),
         .underlineStyles([.single, .patternDot], color: .green)
     ])
@@ -25,4 +27,4 @@ label.attributedText = attributedString
 ```
 As a result, we get something like:
 
-![StringEx Example](Documentation/images/example.png)
+<span style="color: blue;">Hello, <span style="border-bottom: 2px dashed #75f94c;"><span style="font-weight: bold; color: #eb3223;">UserName</span></span>!</span>
