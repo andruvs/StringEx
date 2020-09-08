@@ -51,15 +51,15 @@ public class StringEx {
 
 extension StringEx {
     
-    var count: Int {
+    public var count: Int {
         return selectorResults?.count ?? 0
     }
     
-    var string: String {
+    public var string: String {
         return resultString
     }
     
-    var selectedString: String {
+    public var selectedString: String {
         switch selector {
         case .all:
             return resultString
@@ -93,12 +93,12 @@ extension StringEx {
         return parts.joined(separator: separator)
     }
     
-    var attributedString: NSAttributedString {
+    public var attributedString: NSAttributedString {
         applyManagerStyles()
         return NSAttributedString(attributedString: resultAttributedString)
     }
     
-    var selectedAttributedString: NSAttributedString {
+    public var selectedAttributedString: NSAttributedString {
         switch selector {
         case .all:
             return attributedString
@@ -544,7 +544,7 @@ extension StringEx {
 
 extension StringEx {
     
-    subscript(selector: StringSelector) -> StringEx {
+    public subscript(selector: StringSelector) -> StringEx {
         get {
             self.select(selector)
         }
@@ -693,7 +693,7 @@ extension StringEx {
 
 // Mark: Operators
 
-extension StringEx {
+public extension StringEx {
     
     static func +(lhs: StringEx, rhs: StringEx) -> StringEx {
         return lhs[.range(Int.max..<Int.max)].replace(with: rhs).select(.all)
