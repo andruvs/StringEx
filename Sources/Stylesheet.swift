@@ -8,6 +8,11 @@
 
 import Foundation
 
+/**
+ An object describing a set of styles to apply to a string based on a given selector.
+ 
+ - Tag: Stylesheet
+*/
 public struct Stylesheet {
     let selector: StringSelector
     let styles: [Style]

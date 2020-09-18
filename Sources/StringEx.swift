@@ -9,20 +9,46 @@
 import Foundation
 import UIKit
 
+/**
+ - Tag: StringEx
+*/
 public class StringEx {
     
+    /// Original string including html tags
     public private(set) var rawString: String
+    
+    /// String without html tags
     private var resultString: String
+    
+    /// Current selector
     public private(set) var selector: StringSelector = .all
     
+    /// Object containing html tag information
     private var storage: HTMLTagStorage
+    
+    /// Current selector results
     private var selectorResults: [SelectorResult]?
+    
+    /// A flag that determines whether to execute again the selector after string modifications or not
     private var restoreSelectorResults: Bool = true
     
+    /// Attributed string without html tags to apply styles
     private var resultAttributedString: NSMutableAttributedString
     
+    /// A flag that determines whether to use a style manager or not
     public var useStyleManager = false
     
+    /**
+    Creates a `StringEx` object from the given `String`. The string can contain html tags.
+    
+    # Example #
+    ```
+    let ex = StringEx(string: "Hello, <b>World</b>!")
+    ```
+    
+    - Parameters:
+       - string: The `String` for creating `StringEx` object.
+    */
     public init(string: String) {
         let parser = HTMLParser(source: string)
         parser.parse()
@@ -36,6 +62,19 @@ public class StringEx {
         selectorResults = [SelectorResult(range: 0..<resultString.count, tag: nil)]
     }
     
+    /**
+    Creates a `StringEx` object from the given `NSAttributedString`. The string can contain html tags.
+    This makes the text content and attributes of the passed `NSAttributedString` part of the created `StringEx` object.
+    
+    # Example #
+    ```
+    let attributedString = NSAttributedString(string: "Hello, <b>World</b>!")
+    let ex = StringEx(attributedString: attributedString)
+    ```
+    
+    - Parameters:
+       - attributedString: The `NSAttributedString` for creating `StringEx` object.
+    */
     public init(attributedString: NSAttributedString) {
         let parser = HTMLParser(source: attributedString.string)
         parser.parse()
@@ -55,14 +94,17 @@ public class StringEx {
 
 extension StringEx {
     
+    /// Number of selected sub-ranges
     public var count: Int {
         return selectorResults?.count ?? 0
     }
     
+    /// Whole string without html tags
     public var string: String {
         return resultString
     }
     
+    /// A string containing the selected substrings, concatenated
     public var selectedString: String {
         switch selector {
         case .all:
@@ -72,6 +114,20 @@ extension StringEx {
         }
     }
     
+    /**
+    Returns a string containing the selected ranges concatenated using the passed separator.
+    
+    # Example #
+    ```
+    let ex = "Hello, World!".ex
+    let selectedString = ex[.string("hello") + .string("world")].selectedString(separator: "-")
+    print(selectedString) //Hello-World
+    ```
+     
+    - Parameters:
+       - separator: Separator for combining substrings.
+    - Returns: Concatenated string.
+    */
     public func selectedString(separator: String) -> String {
         guard let results = selectorResults else {
             return ""
@@ -97,11 +153,13 @@ extension StringEx {
         return parts.joined(separator: separator)
     }
     
+    /// Whole `NSAttributedString` without html tags and with applied styles.
     public var attributedString: NSAttributedString {
         applyManagerStyles()
         return NSAttributedString(attributedString: resultAttributedString)
     }
     
+    /// `NSAttributedString` containing the selected substrings, concatenated
     public var selectedAttributedString: NSAttributedString {
         switch selector {
         case .all:
@@ -111,6 +169,22 @@ extension StringEx {
         }
     }
     
+    /**
+    Returns `NSAttributedString` containing the selected ranges concatenated using the passed separator.
+    
+    # Example #
+    ```
+    let ex = "Hello, World!".ex
+    ex[.string("hello")].style(.color(.red))
+    ex[.string("world")].style(.color(.green))
+    let selectedAttributedString = ex[.string("hello") + .string("world")].selectedAttributedString(separator: "-")
+    print(selectedAttributedString.string) //Hello-World
+    ```
+     
+    - Parameters:
+       - separator: Separator for combining substrings.
+    - Returns: Concatenated `NSAttributedString`.
+    */
     public func selectedAttributedString(separator: String) -> NSAttributedString {
         guard let ranges = selectedNSRanges() else {
             return NSAttributedString()
@@ -199,16 +273,105 @@ extension StringEx {
 
 extension StringEx {
     
+    /**
+    Replaces the currently selected sub-ranges of the string with the passed `String`.
+    It is allowed to pass html string.
+    
+    # Example #
+    ```
+    // Replace inner content of each span tag with String
+    let ex = "Hello, <span>User</span>!".ex
+    let str = "<b>World</b>"
+    let result = ex[.tag("span")].replace(with: str).rawString
+    print(result) //Hello, <span><b>World</b></span>!
+    ```
+     
+    - Note:
+     This example shows the difference when using the range conversion mode:
+     
+     ```
+     let ex = "Hello, <span><b></b></span>!".ex
+     let str1 = ex[.tag("span")].replace(with: "World", mode: .outer).rawString
+     let str2 = ex[.tag("span")].replace(with: "World", mode: .inner).rawString
+     print(str1) //Hello, <span>World</span>!
+     print(str2) //Hello, <span><b>World</b></span>!
+     ```
+    
+    - Parameters:
+       - replace: The `String` object for replacing.
+       - mode: Range conversion mode - affects how the selector determines the  ranges of substrings in the case of html string search.
+    - Returns: Self instance for chaining. Result can be discarded.
+    */
     @discardableResult
     public func replace(with replace: String, mode: RangeConversionMode = .outer) -> Self {
         return self.replace(with: replace.ex, mode: mode)
     }
     
+    /**
+    Replaces the currently selected sub-ranges of the string with the passed `NSAttributedString`.
+    This makes the text content and attributes of the passed `NSAttributedString` part of the original `StringEx` object.
+    It is allowed to pass html string.
+    
+    # Example #
+    ```
+    // Replace inner content of each span tag with NSAttributedString
+    let ex = "Hello, <span>User</span>!".ex
+    let attributedString = NSAttributedString(string: "<b>World</b>")
+    let result = ex[.tag("span")].replace(with: attributedString).rawString
+    print(result) //Hello, <span><b>World</b></span>!
+    ```
+     
+    - Note:
+     This example shows the difference when using the range conversion mode:
+     
+     ```
+     let ex = "Hello, <span><b></b></span>!".ex
+     let str1 = ex[.tag("span")].replace(with: "World", mode: .outer).rawString
+     let str2 = ex[.tag("span")].replace(with: "World", mode: .inner).rawString
+     print(str1) //Hello, <span>World</span>!
+     print(str2) //Hello, <span><b>World</b></span>!
+     ```
+    
+    - Parameters:
+       - replace: The `NSAttributedString` object for replacing.
+       - mode: Range conversion mode - affects how the selector determines the  ranges of substrings in the case of html string search.
+    - Returns: Self instance for chaining. Result can be discarded.
+    */
     @discardableResult
     public func replace(with replace: NSAttributedString, mode: RangeConversionMode = .outer) -> Self {
         return self.replace(with: replace.ex, mode: mode)
     }
     
+    /**
+    Replaces the currently selected sub-ranges of the string with the passed [StringEx](x-source-tag://StringEx).
+    This makes the text content and styles of the passed object part of the original `StringEx` object.
+    It is allowed to pass html string.
+    
+    # Example #
+    ```
+    // Replace inner content of each span tag with another StringEx object
+    let ex = "Hello, <span>User</span>!".ex
+    let ex2 = "<b>World</b>".ex
+    let result = ex[.tag("span")].replace(with: ex2).rawString
+    print(result) //Hello, <span><b>World</b></span>!
+    ```
+     
+    - Note:
+     This example shows the difference when using the range conversion mode:
+     
+     ```
+     let ex = "Hello, <span><b></b></span>!".ex
+     let str1 = ex[.tag("span")].replace(with: "World", mode: .outer).rawString
+     let str2 = ex[.tag("span")].replace(with: "World", mode: .inner).rawString
+     print(str1) //Hello, <span>World</span>!
+     print(str2) //Hello, <span><b>World</b></span>!
+     ```
+    
+    - Parameters:
+       - replace: The [StringEx](x-source-tag://StringEx) object for replacing.
+       - mode: Range conversion mode - affects how the selector determines the  ranges of substrings in the case of html string search.
+    - Returns: Self instance for chaining. Result can be discarded.
+    */
     @discardableResult
     public func replace(with replace: StringEx, mode: RangeConversionMode = .outer) -> Self {
         if count == 0 {
@@ -306,9 +469,11 @@ extension StringEx {
         resultString = parser.resultString
         storage = parser.storage
         
+        selectorResults = nil
+        
         // Restore selector results
         if restoreSelectorResults {
-            _ = select(selector)
+            select(selector)
         } else {
             restoreSelectorResults = true
         }
@@ -316,63 +481,222 @@ extension StringEx {
         return self
     }
     
+    /**
+    Insert the passed `String` at the beginning of each currently selected sub-ranges of the string.
+    It is allowed to pass html string.
+    
+    # Example #
+    ```
+    let ex = "<span>World!</span>".ex
+    let result = ex[.tag("span")].prepend("Hello, ").rawString
+    print(result) //<span>Hello, World!</span>
+    ```
+    
+    - Parameters:
+       - value: The `String` object for prepending.
+    - Returns: Self instance for chaining. Result can be discarded.
+    */
     @discardableResult
     public func prepend(_ value: String) -> Self {
         return prepend(value.ex)
     }
     
+    /**
+    Insert the passed `NSAttributedString` at the beginning of each currently selected sub-ranges of the string.
+    This makes the text content and attributes of the passed `NSAttributedString` part of the original `StringEx` object.
+    It is allowed to pass html string.
+    
+    # Example #
+    ```
+    let ex = "<span>World!</span>".ex
+    let attributedString = NSAttributedString(string: "Hello, ")
+    let result = ex[.tag("span")].prepend(attributedString).rawString
+    print(result) //<span>Hello, World!</span>
+    ```
+    
+    - Parameters:
+       - value: The `NSAttributedString` object for prepending.
+    - Returns: Self instance for chaining. Result can be discarded.
+    */
     @discardableResult
     public func prepend(_ value: NSAttributedString) -> Self {
         return prepend(value.ex)
     }
     
+    /**
+    Insert the passed [StringEx](x-source-tag://StringEx) object at the beginning of each currently selected sub-ranges of the string.
+    This makes the text content and styles of the passed object part of the original `StringEx` object.
+    It is allowed to pass html string.
+    
+    # Example #
+    ```
+    let ex = "<span>World!</span>".ex
+    let ex2 = "Hello, ".ex
+    let result = ex[.tag("span")].prepend(ex2).rawString
+    print(result) //<span>Hello, World!</span>
+    ```
+    
+    - Parameters:
+       - value: The [StringEx](x-source-tag://StringEx) object for prepending.
+    - Returns: Self instance for chaining. Result can be discarded.
+    */
     @discardableResult
     public func prepend(_ value: StringEx) -> Self {
         let currentSelector = selector
-        _ = select(selector.select(.range(0..<0)))
+        select(selector.select(.range(0..<0)))
         restoreSelectorResults = false
         self.replace(with: value)
-        _ = select(currentSelector)
+        select(currentSelector)
         return self
     }
     
+    /**
+    Insert the passed `String` at the end of each currently selected sub-ranges of the string.
+    It is allowed to pass html string.
+    
+    # Example #
+    ```
+    let ex = "<span>Hello</span>".ex
+    let result = ex[.tag("span")].append(", World!").rawString
+    print(result) //<span>Hello, World!</span>
+    ```
+    
+    - Parameters:
+       - value: The `String` object for appending.
+    - Returns: Self instance for chaining. Result can be discarded.
+    */
     @discardableResult
     public func append(_ value: String) -> Self {
         return append(value.ex)
     }
     
+    /**
+    Insert the passed `NSAttributedString` at the end of each currently selected sub-ranges of the string.
+    This makes the text content and attributes of the passed `NSAttributedString` part of the original `StringEx` object.
+    It is allowed to pass html string.
+    
+    # Example #
+    ```
+    let ex = "<span>Hello</span>".ex
+    let attributedString = NSAttributedString(string: ", World!")
+    let result = ex[.tag("span")].append(attributedString).rawString
+    print(result) //<span>Hello, World!</span>
+    ```
+    
+    - Parameters:
+       - value: The `NSAttributedString` object for appending.
+    - Returns: Self instance for chaining. Result can be discarded.
+    */
     @discardableResult
     public func append(_ value: NSAttributedString) -> Self {
         return append(value.ex)
     }
     
+    /**
+    Insert the passed [StringEx](x-source-tag://StringEx) object at the end of each currently selected sub-ranges of the string.
+    This makes the text content and styles of the passed object part of the original `StringEx` object.
+    It is allowed to pass html string.
+    
+    # Example #
+    ```
+    let ex = "<span>Hello</span>".ex
+    let ex2 = ", World!".ex
+    let result = ex[.tag("span")].append(ex2).rawString
+    print(result) //<span>Hello, World!</span>
+    ```
+    
+    - Parameters:
+       - value: The [StringEx](x-source-tag://StringEx) object for appending.
+    - Returns: Self instance for chaining. Result can be discarded.
+    */
     @discardableResult
     public func append(_ value: StringEx) -> Self {
         let currentSelector = selector
-        _ = select(selector.select(.range(Int.max..<Int.max)))
+        select(selector.select(.range(Int.max..<Int.max)))
         restoreSelectorResults = false
         self.replace(with: value)
-        _ = select(currentSelector)
+        select(currentSelector)
         return self
     }
     
+    /**
+    Insert the passed `String` at the specified index of each currently selected sub-ranges of the string.
+    It is allowed to pass html string.
+     
+    - Note:
+    The index is calculated from the beginning of the selected range by the number of characters displayed in the string.
+    
+    # Example #
+    ```
+    let ex = "Hello, <span>Wold</span>!".ex
+    let result = ex[.tag("span")].insert("r", at: 2).rawString
+    print(result) //<span>Hello, World!</span>
+    ```
+    
+    - Parameters:
+       - value: The `String` object for inserting.
+       - index: The index at which to insert the value.
+    - Returns: Self instance for chaining. Result can be discarded.
+    */
     @discardableResult
-    public func insert(_ value: String, at index: Int) -> Self {
+    public func insert(_ value: String, at index: Int = 0) -> Self {
         return insert(value.ex, at: index)
     }
     
+    /**
+    Insert the passed `NSAttributedString` at the specified index of each currently selected sub-ranges of the string.
+    This makes the text content and attributes of the passed `NSAttributedString` part of the original `StringEx` object.
+    It is allowed to pass html string.
+     
+    - Note:
+    The index is calculated from the beginning of the selected range by the number of characters displayed in the string.
+    
+    # Example #
+    ```
+    let ex = "Hello, <span>Wold</span>!".ex
+    let attributedString = NSAttributedString(string: "r")
+    let result = ex[.tag("span")].insert(attributedString, at: 2).rawString
+    print(result) //<span>Hello, World!</span>
+    ```
+    
+    - Parameters:
+       - value: The `NSAttributedString` object for inserting.
+       - index: The index at which to insert the value.
+    - Returns: Self instance for chaining. Result can be discarded.
+    */
     @discardableResult
-    public func insert(_ value: NSAttributedString, at index: Int) -> Self {
+    public func insert(_ value: NSAttributedString, at index: Int = 0) -> Self {
         return insert(value.ex, at: index)
     }
     
+    /**
+    Insert the passed [StringEx](x-source-tag://StringEx) object at the specified index of each currently selected sub-ranges of the string.
+    This makes the text content and styles of the passed object part of the original `StringEx` object.
+    It is allowed to pass html string.
+     
+    - Note:
+    The index is calculated from the beginning of the selected range by the number of characters displayed in the string.
+    
+    # Example #
+    ```
+    let ex = "Hello, <span>Wold</span>!".ex
+    let ex2 = "r".ex
+    let result = ex[.tag("span")].insert(ex2, at: 2).rawString
+    print(result) //<span>Hello, World!</span>
+    ```
+    
+    - Parameters:
+       - value: The [StringEx](x-source-tag://StringEx) object  for inserting.
+       - index: The index at which to insert the value.
+    - Returns: Self instance for chaining. Result can be discarded.
+    */
     @discardableResult
-    public func insert(_ value: StringEx, at index: Int) -> Self {
+    public func insert(_ value: StringEx, at index: Int = 0) -> Self {
         let currentSelector = selector
-        _ = select(selector.select(.range(index..<index)))
+        select(selector.select(.range(index..<index)))
         restoreSelectorResults = false
         self.replace(with: value)
-        _ = select(currentSelector)
+        select(currentSelector)
         return self
     }
 }
@@ -381,26 +705,86 @@ extension StringEx {
 
 extension StringEx {
     
+    /**
+     Applies stylesheet to a string.
+    
+     # Example #
+     ```
+     let stylesheet = Stylesheet(selector: .all, styles: [
+        .font(.systemFont(ofSize: 17.0)),
+        .color(.red)
+     ])
+     ex.style(stylesheet)
+     ```
+    
+     - Parameters:
+       - stylesheet: The [Stylesheet](x-source-tag://Stylesheet) object.
+     - Returns: Self instance for chaining. Result can be discarded.
+    */
     @discardableResult
     public func style(_ stylesheet: Stylesheet) -> Self {
         return self.style([stylesheet])
     }
     
+    /**
+     Applies an array of stylesheets to a string.
+    
+     # Example #
+     ```
+     let stylesheet1 = Stylesheet(selector: .all, styles: [
+        .font(.systemFont(ofSize: 17.0)),
+        .color(.red)
+     ])
+     let stylesheet2 = Stylesheet(selector: .all, style: .backgroundColor(.green))
+     ex.style([stylesheet1, stylesheet2])
+     ```
+    
+     - Parameters:
+       - stylesheets: The array of the [Stylesheet](x-source-tag://Stylesheet) objects.
+     - Returns: Self instance for chaining. Result can be discarded.
+    */
     @discardableResult
     public func style(_ stylesheets: [Stylesheet]) -> Self {
-        
+        let currentSelector = selector
         for stylesheet in stylesheets {
             self[stylesheet.selector].style(stylesheet.styles)
         }
-        
+        select(currentSelector)
         return self
     }
     
+    /**
+    Applies style to the currently selected sub-ranges of the string.
+    
+    # Example #
+    ```
+    ex[.all].style(.color(.red))
+    ```
+    
+    - Parameters:
+       - style: The [Style](x-source-tag://Style) object.
+    - Returns: Self instance for chaining. Result can be discarded.
+    */
     @discardableResult
     public func style(_ style: Style) -> Self {
         return self.style([style])
     }
     
+    /**
+     Applies styles to the currently selected sub-ranges of the string.
+     
+     # Example #
+     ```
+     ex[.all].style([
+        .font(.systemFont(ofSize: 17.0)),
+        .color(.red)
+     ])
+     ```
+     
+     - Parameters:
+        - styles: The array of the [Style](x-source-tag://Style) objects.
+     - Returns: Self instance for chaining. Result can be discarded.
+     */
     @discardableResult
     public func style(_ styles: [Style]) -> Self {
         
@@ -524,6 +908,16 @@ extension StringEx {
         return self
     }
     
+    /**
+    Clear all styles of the currently selected sub-ranges of the string.
+    
+    # Example #
+    ```
+    ex[.range(0..<10)].clearStyles()
+    ```
+    
+    - Returns: Self instance for chaining. Result can be discarded.
+    */
     @discardableResult
     public func clearStyles() -> Self {
         switch selector {
@@ -548,13 +942,43 @@ extension StringEx {
 
 extension StringEx {
     
+    /**
+    Subscript version of the `select` method.
+    
+    # Example #
+    ```
+    // Applies red color to the first character of all substrings within a span tag
+    ex[.tag("span") => .range(0..<1)].style(.color(.red))
+    ```
+    
+    - Parameters:
+       - selector: The [StringSelector](x-source-tag://StringSelector) object.
+    - Returns: Self instance for chaining. Result can be discarded.
+    */
     public subscript(selector: StringSelector) -> StringEx {
         get {
             self.select(selector)
         }
     }
     
+    /**
+    Sets an internal pointer to the passed selector and selects sub-ranges of the string by that selector.
+    
+    # Example #
+    ```
+    // Selects the first character of all substrings within a span tag
+    ex.select(.tag("span") => .range(0..<1))
+    ```
+    
+    - Parameters:
+       - selector: The [StringSelector](x-source-tag://StringSelector) object.
+    - Returns: Self instance for chaining. Result can be discarded.
+    */
+    @discardableResult
     public func select(_ selector: StringSelector) -> Self {
+        if selector == self.selector && selectorResults != nil {
+            return self
+        }
         self.selector = selector
         var results = execute(selector)
         results.sort { $0.range.lowerBound < $1.range.lowerBound }

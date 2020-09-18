@@ -10,6 +10,7 @@ import Foundation
 
 public extension NSAttributedString {
     
+    /// Shorthand method for creating `StringEx` object from `NSAttributedString`
     var ex: StringEx {
         return StringEx(attributedString: self)
     }
