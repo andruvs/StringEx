@@ -93,7 +93,7 @@ ex = NSAttributedString(string: "Hello, World!").ex
 
 ## String selectors
 
-String selectors are the :heart: of the library. With selectors, you can select sub-ranges of a string in different ways and in a uniform manner. Various manipulations can be performed on the selected substrings, such as deleting, replacing, adding other strings, and applying styles.
+String selectors are the :heart: &nbsp; of the library. With selectors, you can select sub-ranges of a string in different ways and in a uniform manner. Various manipulations can be performed on the selected substrings, such as deleting, replacing, adding other strings, and applying styles.
 
 There are two ways to execute selectors:
 
