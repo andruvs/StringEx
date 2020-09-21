@@ -1098,19 +1098,47 @@ extension StringEx {
             var selectorResults = execute(selector)
             if !selectorResults.isEmpty {
                 selectorResults.sort { $0.range.lowerBound < $1.range.lowerBound }
+                
+                var filterResults = [SelectorResult]()
+                
                 switch filter {
                 case .first:
-                    results.append(selectorResults.first!)
+                    filterResults.append(selectorResults.first!)
                 case .last:
-                    results.append(selectorResults.last!)
+                    filterResults.append(selectorResults.last!)
                 case .eq(let index):
                     if index >= 0 && index < selectorResults.count {
-                        results.append(selectorResults[index])
+                        filterResults.append(selectorResults[index])
                     }
                 case .even:
-                    results.append(contentsOf: selectorResults.enumerated().compactMap { $0 % 2 == 0 ? $1 : nil })
+                    filterResults.append(contentsOf: selectorResults.enumerated().compactMap { $0 % 2 == 0 ? $1 : nil })
                 case .odd:
-                    results.append(contentsOf: selectorResults.enumerated().compactMap { $0 % 2 != 0 ? $1 : nil })
+                    filterResults.append(contentsOf: selectorResults.enumerated().compactMap { $0 % 2 != 0 ? $1 : nil })
+                case .gt(let index):
+                    filterResults.append(contentsOf: selectorResults.enumerated().compactMap { $0 > index ? $1 : nil })
+                case .lt(let index):
+                    filterResults.append(contentsOf: selectorResults.enumerated().compactMap { $0 < index ? $1 : nil })
+                }
+                
+                if let parent = parent {
+                    switch selector {
+                    case .tag, .class, .id:
+                        results.append(contentsOf: filterResults.compactMap {
+                            if let tagPair = $0.tag, parent.contains(tagPair) {
+                                return $0
+                            }
+                            return nil
+                        })
+                    default:
+                        results.append(contentsOf: filterResults.compactMap {
+                            if $0.range.lowerBound >= parent.range.lowerBound && $0.range.upperBound <= parent.range.upperBound {
+                                return $0
+                            }
+                            return nil
+                        })
+                    }
+                } else {
+                    results.append(contentsOf: filterResults)
                 }
             }
         }

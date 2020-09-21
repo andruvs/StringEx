@@ -29,4 +29,10 @@ public enum Filter: Hashable {
         
     /// Reduces the set of the selector results to odd ones in the set.
     case odd
+    
+    /// Select all selector results at the index greater than index within the set.
+    case gt(_ index: Int)
+    
+    /// Select all selector results at the index less than index within the set.
+    case lt(_ index: Int)
 }

@@ -94,11 +94,17 @@ class StringExStringTests: XCTestCase {
         XCTAssertEqual("56", getString("1234567890", .range(2..<6) => .all => .range(2..<Int.max)))
         XCTAssertEqual("56", getString("12<a>3456</a>7890", .tag("a") => .range(2..<Int.max)))
         XCTAssertEqual("6", getString("1<a>2</a>345<a>6</a>7890", .range(3..<Int.max) => .tag("a")))
+        XCTAssertEqual("", getString("<span>Hello</span>, <em>World</em>!", .range(5..<Int.max) => .tag("span")))
     }
     
     func testSelectOrder() {
         XCTAssertEqual("125", getString("1234567890", .range(0..<2) + .range(3..<6) => .range(1..<2)))
         XCTAssertEqual("25", getString("1234567890", (.range(0..<2) + .range(3..<6)) => .range(1..<2)))
+        XCTAssertEqual("HelloW", getString("<span><b>Hello</b></span>, <em><b>World</b></em>!", .tag("span") + .tag("em") => .range(0..<1)))
+        XCTAssertEqual("HW", getString("<span><b>Hello</b></span>, <em><b>World</b></em>!", (.tag("span") + .tag("em")) => .range(0..<1)))
+        XCTAssertEqual("Hello", getString("<span><b>Hello</b></span>, <em><b>World</b></em>!", .tag("span") => .tag("b") % .last))
+        XCTAssertEqual("", getString("<span><b>Hello</b></span>, <em><b>World</b></em>!", .tag("span") => (.tag("b") % .last)))
+        XCTAssertEqual("Hello", getString("<span><b>Hello</b></span>, <em><b>World</b></em>!", .tag("span") => (.tag("b") % .first)))
     }
     
     func testReplaceNoTags() {
