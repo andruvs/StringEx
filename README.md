@@ -61,13 +61,13 @@ As a result, we get something like:
 
 First of all include the library in code:
 
-```
+```swift
 import StringEx
 ```
 
 Creating `StringEx` instance:
 
-```
+```swift
 // Creating with an initializer from a string
 var ex = StringEx(string: "Hello, World!")
 
@@ -83,11 +83,11 @@ ex = NSAttributedString(string: "Hello, World!").ex
 
 ## String selectors
 
-String selectors are the ❤️ of the library. With selectors, you can select sub-ranges of a string in different ways and in a uniform manner. Various manipulations can be performed on the selected substrings, such as deleting, replacing, adding other strings, and applying styles.
+String selectors are the ❤️  of the library. With selectors, you can select sub-ranges of a string in different ways and in a uniform manner. Various manipulations can be performed on the selected substrings, such as deleting, replacing, adding other strings, and applying styles.
 
 There are two ways to execute selectors:
 
-```
+```swift
 let ex = "Hello, World!".ex
 
 // Using select method
@@ -107,7 +107,7 @@ The following types of selectors are available:
 
 `StringEx` can process HTML strings, allowing you to select substrings within HTML tags by tag name, class or identifier. HTML tags syntax must conform to the specification available at [https://html.spec.whatwg.org/multipage/syntax.html](https://html.spec.whatwg.org/multipage/syntax.html)
 
-```
+```swift
 let ex = "Example: <p id="example"><span class="word1">Hello</span>, <span class="word2">World</span>!</p>".ex
 
 // Select by tag name
@@ -125,7 +125,7 @@ print(str3) // Hello, World!
 
 You can also use self-closing tags:
 
-```
+```swift
 let ex = "Hello, <name />!".ex
 let str = ex[.tag("name")].insert("World").string
 print(str) // Hello, World!
@@ -133,7 +133,7 @@ print(str) // Hello, World!
 
 ### Substrings
 
-```
+```swift
 let ex = "Hello, World!".ex
 
 // Case insensitive search
@@ -150,7 +150,7 @@ print(str3.isEmpty) // true
 
 ### Regular expressions
 
-```
+```swift
 let ex = "Hello, World!".ex
 
 // Select only latin symbols
@@ -166,7 +166,7 @@ print(str2) // HelloWorld
 
 `StringEx` uses a `Range<Int>` to work with ranges. The index corresponds to each displayed character in the string, where the first character is at index`0`, the last is at index `str.count - 1`
 
-```
+```swift
 let ex = "Hello, World!".ex
 
 // Select first 5 symbols
