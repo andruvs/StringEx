@@ -11,6 +11,10 @@ StringEx makes it easy to create `NSAttributedString` and manipulate `String`.
 	* [Substrings](#substrings)
 	* [Regular expressions](#regular-expressions)
 	* [Ranges](#ranges)
+	* [Nested selectors](#nested-selectors)
+	* [Selectors union](#selectors-union)
+	* [Filtering selectors](#filtering-selectors)
+	* [Priority](#priority)
 
 ## Quick Example
 
@@ -93,7 +97,7 @@ ex = NSAttributedString(string: "Hello, World!").ex
 
 ## String selectors
 
-String selectors are the :heart: &nbsp; of the library. With selectors, you can select sub-ranges of a string in different ways and in a uniform manner. Various manipulations can be performed on the selected substrings, such as deleting, replacing, adding other strings, and applying styles.
+String selectors are the :heart: &nbsp;of the library. With selectors, you can select sub-ranges of a string in different ways and in a uniform manner. Various manipulations can be performed on the selected substrings, such as deleting, replacing, adding other strings, and applying styles.
 
 There are two ways to execute selectors:
 
@@ -176,6 +180,8 @@ print(str2) // HelloWorld
 
 `StringEx` uses a `Range<Int>` to work with ranges. The index corresponds to each displayed character in the string, where the first character is at index`0`, the last is at index `str.count - 1`
 
+> In HTML strings, indices correspond to characters in a string without tags
+
 ```swift
 let ex = "Hello, World!".ex
 
@@ -186,4 +192,110 @@ print(str1) // Hello
 // It is safe to pass a range that is out of range
 let str2 = ex[.range(-Int.max..<Int.max)].selectedString
 print(str2) // Hello, World!
+```
+
+### Nested selectors
+
+You can use nested selectors to search within the parent selector.
+
+```swift
+// Select first character of each span tag
+let selector1: StringSelector = .tag("span").select(.range(0..<1))
+
+// or do the same using the shorthand operator =>
+let selector2: StringSelector = .tag("span") => .range(0..<1)
+
+print(selector1 == selector2) // true
+```
+
+```swift
+let ex = "<b><span>Hello</span></b>, <span><b>World</b></span>!".ex
+let str = ex[.tag("span") => .tag("b") => .range(0..<1)].selectedString
+print(str) // W
+```
+
+### Selectors union
+
+You can combine multiple selectors into one to perform searches within a single statement.
+
+```swift
+// Select inner contents of each span and em tags
+let selector1: StringSelector = .tag("span").add(.tag("em"))
+
+// or do the same using the shorthand operator +
+let selector2: StringSelector = .tag("span") + .tag("em")
+
+print(selector1 == selector2) // true
+```
+
+```swift
+let ex = "<span>Hello</span>, <em>World</em>!".ex
+let str = ex[.tag("span") + .tag("em")].selectedString
+print(str) // HelloWorld
+```
+
+### Filtering selectors
+
+You can filter the results of the selectors to get the desired result subset.
+
+```swift
+// Get the first result of the selector
+let selector1: StringSelector = .tag("span").filter(.first)
+
+// or do the same using the shorthand operator %
+let selector2: StringSelector = .tag("span") % .first
+
+print(selector1 == selector2) // true
+```
+
+```swift
+let ex = "<b>H</b><b>e</b><b>l</b><b>l</b><b>o</b>, <b>W</b><b>o</b><b>r</b><b>l</b><b>d</b>!".ex
+
+// Reduces the set of the selector results to the first in the set
+let str1 = ex[.tag("b") % .first].selectedString
+print(str1) // H
+
+// Reduces the set of the selector results to the last in the set
+let str2 = ex[.tag("b") % .last].selectedString
+print(str2) // d
+
+// Reduces the set of the selector results to the one at the specified index
+let str3 = ex[.tag("b") % .eq(5)].selectedString
+print(str3) // W
+
+// Reduces the set of the selector results to even ones in the set
+let str4 = ex[.tag("b") % .even].selectedString
+print(str4) // Hlool
+
+// Reduces the set of the selector results to odd ones in the set
+let str5 = ex[.tag("b") % .odd].selectedString
+print(str5) // elWrd
+
+// Select all selector results at the index greater than index within the set
+let str6 = ex[.tag("b") % .gt(4)].selectedString
+print(str6) // World
+
+// Select all selector results at the index less than index within the set
+let str7 = ex[.tag("b") % .lt(5)].selectedString
+print(str7) // Hello
+```
+
+### Priority
+
+You can change the order of the operators using parentheses similar to the conventional arithmetic expressions.
+
+```swift
+let ex = "<span><b>Hello</b></span>, <em><b>World</b></em>!".ex
+
+let selector1: StringSelector = .tag("span") + .tag("em") => .range(0..<1)
+print(ex[selector1].selectedString) // HelloW
+
+let selector2: StringSelector = (.tag("span") + .tag("em")) => .range(0..<1)
+print(ex[selector2].selectedString) // HW
+
+let selector3: StringSelector = .tag("span") => .tag("b") % .last
+print(ex[selector3].selectedString) // Hello
+
+let selector4: StringSelector = .tag("span") => (.tag("b") % .last)
+print(ex[selector4].selectedString.isEmpty) // true
 ```
