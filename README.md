@@ -282,7 +282,7 @@ print(str7) // Hello
 
 ### Priority
 
-You can change the order of the operators using parentheses similar to the conventional arithmetic expressions.
+You can change the order of the operators using parentheses similar to the conventional arithmetic expressions. Operators `=>` and `%` have the same priority and it is greater than operator `+` priority.
 
 ```swift
 let ex = "<span><b>Hello</b></span>, <em><b>World</b></em>!".ex
