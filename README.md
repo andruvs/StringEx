@@ -2,6 +2,16 @@
 
 StringEx makes it easy to create `NSAttributedString` and manipulate `String`.
 
+## Table of contents
+
+* [Quick Example](#quick-example)
+* [Initialization](#initialization)
+* [String selectors](#string-selectors)
+	* [HTML tags](#html-tags)
+	* [Substrings](#substrings)
+	* [Regular expressions](#regular-expressions)
+	* [Ranges](#ranges)
+
 ## Quick Example
 
 This simple example allows you to understand what the library actually does.
@@ -83,7 +93,7 @@ ex = NSAttributedString(string: "Hello, World!").ex
 
 ## String selectors
 
-String selectors are the ❤️  of the library. With selectors, you can select sub-ranges of a string in different ways and in a uniform manner. Various manipulations can be performed on the selected substrings, such as deleting, replacing, adding other strings, and applying styles.
+String selectors are the :heart: of the library. With selectors, you can select sub-ranges of a string in different ways and in a uniform manner. Various manipulations can be performed on the selected substrings, such as deleting, replacing, adding other strings, and applying styles.
 
 There are two ways to execute selectors:
 
@@ -162,7 +172,7 @@ let str2 = ex[.regex("[a-z]", options: [.caseInsensitive])].selectedString
 print(str2) // HelloWorld
 ```
 
-### Range
+### Ranges
 
 `StringEx` uses a `Range<Int>` to work with ranges. The index corresponds to each displayed character in the string, where the first character is at index`0`, the last is at index `str.count - 1`
 
