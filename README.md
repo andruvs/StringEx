@@ -1,10 +1,11 @@
 # StringEx
 
-StringEx makes it easy to create `NSAttributedString` and manipulate `String`.
+`StringEx` makes it easy to create `NSAttributedString` and manipulate `String`.
 
 ## Table of contents
 
 * [Quick Example](#quick-example)
+* [Installation](#installation)
 * [Initialization](#initialization)
 * [String selectors](#string-selectors)
 	* [HTML tags](#html-tags)
@@ -20,6 +21,12 @@ StringEx makes it easy to create `NSAttributedString` and manipulate `String`.
 	* [Selector](#selector)
 	* [String](#string)
 	* [NSAttributedString](#nsattributedstring)
+* [Manipulations](#manipulations)
+	* [Concatenation](#concatenation)
+	* [Replacing](#replacing)
+	* [Appending](#appending)
+	* [Prepending](#prepending)
+	* [Inserting](#inserting)
 
 ## Quick Example
 
@@ -99,7 +106,7 @@ end
 
 ## Initialization
 
-First of all include the library in code:
+First of all include the library in your swift file:
 
 ```swift
 import StringEx
@@ -114,7 +121,7 @@ var ex = StringEx(string: "Hello, World!")
 // Creating with an initializer from a NSAttributedString
 ex = StringEx(attributedString: NSAttributedString(string: "Hello, World!"))
 
-// Shorthand method for strings
+// Shorthand method for string
 ex = "Hello, World!".ex
 
 // Shorthand method for NSAttributedString
@@ -204,7 +211,7 @@ print(str2) // HelloWorld
 
 ### Ranges
 
-`StringEx` uses a `Range<Int>` to work with ranges. The index corresponds to each displayed character in the string, where the first character is at index`0`, the last is at index `str.count - 1`
+`StringEx` uses a `Range<Int>` to work with ranges. The index corresponds to each displayed character in the string, where the first character is at index`0`, the last is at index `string.count - 1`
 
 > In HTML strings, indices correspond to characters in a string without tags
 
@@ -222,7 +229,7 @@ print(str2) // Hello, World!
 
 ### Reset
 
-In addition to the above selectors, there is also a selector `.all` that allows you to select the entire string.
+In addition to the above selectors, there is also the `.all` selector that allows you to select the entire string.
 
 ```swift
 let ex = "<span>Hello</span>, World!".ex
@@ -424,4 +431,82 @@ print(attributedString2.string) // HelloWorld
 // Get NSAttributedString containing only the selected substring using separator
 let attributedString3 = ex.selectedAttributedString(separator: "-")
 print(attributedString3.string) // Hello-World
+```
+
+## Manipulations
+
+### Concatenation
+
+You can create new `StringEx` instances by concatenating with other `StringEx` instances as well as `String` and `NSAttributedString`.
+
+```swift
+let helloEx = "Hello".ex
+let worldEx = "World".ex
+let exclamationAttributed = NSAttributedString(string: "!", attributes: [.foregroundColor: UIColor.red])
+
+let ex = helloEx + ", " + worldEx + exclamationAttributed
+        
+print(ex.rawString) // Hello, World!
+```
+
+### Replacing
+
+You can replace selected substrings with other `StringEx` instances, `String` or `NSAttributedString`. 
+
+> If you use a selector by HTML tag, then the result of its work is the inner content of the tag, so the replacement affects only the inner content and leaves the tag itself in the original string.
+
+```swift
+let ex = "Hello, <span>World</span>!".ex
+let str = ex[.tag("span")].replace(with: "Big World").rawString
+print(str) // Hello, <span>Big World</span>!
+```
+
+There is also an optional `mode` parameter in the `replace` method. This parameter can take two values `.outer` (default) / `.inner` and is responsible for the mode of converting the selected ranges in the HTML string. This example shows the difference when using the `mode` parameter:
+
+```swift
+let ex = "Hello, <span><b></b></span>!".ex
+
+let str1 = ex[.tag("span")].replace(with: "World", mode: .outer).rawString
+let str2 = ex[.tag("span")].replace(with: "World", mode: .inner).rawString
+
+print(str1) // Hello, <span>World</span>!
+print(str2) // Hello, <span><b>World</b></span>!
+```
+
+### Appending
+
+You can insert the passed `StringEx`, `String` or `NSAttributedString` at the end of each currently selected sub-ranges of the string using the `append` method:
+
+```swift
+let ex = "<span>Hello</span>, <span>World</span>!".ex
+let str = ex[.tag("span")].append("?").rawString
+print(str) // <span>Hello?</span>, <span>World?</span>!
+```
+
+### Prepending
+
+You can insert the passed `StringEx`, `String` or `NSAttributedString` at the beginning of each currently selected sub-ranges of the string using the `prepend` method:
+
+```swift
+let ex = "<span>Hello</span>, <span>World</span>!".ex
+let str = ex[.tag("span")].prepend("?").rawString
+print(str) // <span>?Hello</span>, <span>?World</span>!
+```
+
+### Inserting
+
+You can insert the passed `StringEx`, `String` or `NSAttributedString` at the specified index of each currently selected sub-ranges of the string using the `insert` method:
+
+```swift
+let ex = "<span>Hello</span>, <span>World</span>!".ex
+let str = ex[.tag("span")].insert("?", at: 2).rawString
+print(str) // <span>He?llo</span>, <span>Wo?rld</span>!
+```
+
+You can also omit the `index` parameter to insert the value into an empty HTML tag.
+
+```swift
+let ex = "Hello, <span />!".ex
+let str = ex[.tag("span")].insert("World").rawString
+print(str) // Hello, <span>World</span>!
 ```
