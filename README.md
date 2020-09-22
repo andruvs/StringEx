@@ -11,10 +11,15 @@ StringEx makes it easy to create `NSAttributedString` and manipulate `String`.
 	* [Substrings](#substrings)
 	* [Regular expressions](#regular-expressions)
 	* [Ranges](#ranges)
+	* [Reset](#reset)
 	* [Nested selectors](#nested-selectors)
 	* [Selectors union](#selectors-union)
 	* [Filtering selectors](#filtering-selectors)
 	* [Priority](#priority)
+* [Getters](#getters)
+	* [Selector](#selector)
+	* [String](#string)
+	* [NSAttributedString](#nsattributedstring)
 
 ## Quick Example
 
@@ -70,6 +75,27 @@ textView.dataDetectorTypes = .link
 As a result, we get something like:
 
 ![Example](Documentation/images/example.gif)
+
+## Installation
+
+* Requires:
+	* iOS 10.0+
+	* Swift 5.2 (Xcode 11.4+)
+* Dependencies:
+	* None
+
+### CocoaPods
+
+You can use [CocoaPods](https://cocoapods.org/) to install `StringEx` by adding it to your `Podfile`:
+
+```ruby
+platform :ios, '10.0'
+use_frameworks!
+
+target 'MyApp' do
+    pod 'StringEx'
+end
+```
 
 ## Initialization
 
@@ -194,6 +220,21 @@ let str2 = ex[.range(-Int.max..<Int.max)].selectedString
 print(str2) // Hello, World!
 ```
 
+### Reset
+
+In addition to the above selectors, there is also a selector `.all` that allows you to select the entire string.
+
+```swift
+let ex = "<span>Hello</span>, World!".ex
+
+let str1 = ex[.tag("span")].selectedString
+print(str1) // Hello
+
+// Reset selector
+let str2 = ex[.all].selectedString
+print(str2) // Hello, World!
+```
+
 ### Nested selectors
 
 You can use nested selectors to search within the parent selector.
@@ -298,4 +339,89 @@ print(ex[selector3].selectedString) // Hello
 
 let selector4: StringSelector = .tag("span") => (.tag("b") % .last)
 print(ex[selector4].selectedString.isEmpty) // true
+```
+
+## Getters
+
+`StringEx` has several useful properties and methods to get all the information you need.
+
+### Selector
+
+```swift
+let ex = "<span>Hello</span>, <span>World</span>!".ex
+
+// Get the current selector
+print(ex.selector) // all
+
+ex.select(.tag("span"))
+
+// Get the current selector
+print(ex.selector) // tag("span")
+
+// Get the number of found sub-ranges
+print(ex.count) // 2
+```
+
+### String
+
+To get the original string (with HTML tags), you can use the `rawString` property. When creating an `StringEx` instance containing HTML tags, the library tries to fix possible markup errors, such as missing end tags, etc. In this case, the `rawString` property will contain the corrected HTML string.
+
+```swift
+let ex = "Hello, <b>World!".ex
+print(ex.rawString) // Hello, <b>World!</b>
+```
+
+To get the entire `String` without HTML tags, you can use the `string` property. This property always contains the entire string, regardless of the current selector applied to the `StringEx` instance.
+
+```swift
+let ex = "Hello, <b>World</b>!".ex
+
+print(ex.string) // Hello, World!
+
+ex.select(.tag("b"))
+
+print(ex.string) // Hello, World!
+```
+
+You can use the `selectedString` property or `selectedString(separator: String)` method to retrieve only the selected sub-ranges of a string. 
+
+> Because the result of the selector is an array of sub-ranges, then to get the selected string, you have to pass a separator that will be used to combine the selected substrings. In the case of using the `selectedString` property, the separator is an empty string `""` by default.
+
+```swift
+let ex = "<span>Hello</span>, <span>World</span>!".ex
+
+ex.select(.tag("span"))
+
+// Using the property
+print(ex.selectedString) // HelloWorld
+
+// Using the method
+print(ex.selectedString(separator: "-")) // Hello-World
+
+// Overlapping ranges are combined into one
+ex.select(.tag("span") + .range(0..<2) + .range(8..<Int.max))
+print(ex.selectedString) // HelloWorld!
+
+```
+
+### NSAttributedString
+
+You can get `NSAttributedString` with apllied styles containing both the entire string without HTML tags, and only the selected part using selectors. The library always returns a new `NSAttributedString` instance, so it can be safely used right away without having to create a copy of the `NSAttributedString` instance.
+
+```swift
+let ex = "<span>Hello</span>, <span>World</span>!".ex
+
+ex[.tag("span")].style(.color(.red))
+
+// Get NSAttributedString containing the entire string
+let attributedString1 = ex.attributedString
+print(attributedString1.string) // Hello, World!
+
+// Get NSAttributedString containing only the selected substring
+let attributedString2 = ex.selectedAttributedString
+print(attributedString2.string) // HelloWorld
+
+// Get NSAttributedString containing only the selected substring using separator
+let attributedString3 = ex.selectedAttributedString(separator: "-")
+print(attributedString3.string) // Hello-World
 ```
