@@ -8,21 +8,31 @@
 
 import Foundation
 
-/// Filtering options for selector results.
+/**
+ The list of available filters.
+ 
+ - Tag: Filter
+*/
 public enum Filter: Hashable {
     
-    /// Reduces the set of matched elements to the first in the set.
+    /// Reduces the set of the selector results to the first in the set.
     case first
         
-    /// Reduces the set of matched elements to the last in the set.
+    /// Reduces the set of the selector results to the last in the set.
     case last
         
-    /// Reduces the set of matched elements to the one at the specified index.
+    /// Reduces the set of the selector results to the one at the specified index.
     case eq(_ index: Int)
         
-    /// Reduces the set of matching items to even ones in the set.
+    /// Reduces the set of the selector results to even ones in the set.
     case even
         
-    /// Reduces the set of matching items to odd ones in the set.
+    /// Reduces the set of the selector results to odd ones in the set.
     case odd
+    
+    /// Select all selector results at the index greater than index within the set.
+    case gt(_ index: Int)
+    
+    /// Select all selector results at the index less than index within the set.
+    case lt(_ index: Int)
 }

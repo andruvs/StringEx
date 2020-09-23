@@ -10,6 +10,7 @@ import Foundation
 
 public extension String {
     
+    /// Shorthand method for creating `StringEx` object from string
     var ex: StringEx {
         return StringEx(string: self)
     }
