@@ -1,6 +1,6 @@
-[![Travis CI](https://travis-ci.org/andruvs/StringEx.svg?branch=master)](https://travis-ci.org/andruvs/StringEx)
-
 # StringEx
+
+[![Travis CI](https://travis-ci.org/andruvs/StringEx.svg?branch=master)](https://travis-ci.org/andruvs/StringEx) ![Cocoapods](https://img.shields.io/cocoapods/v/StringEx?label=Cocoapods)
 
 `StringEx` makes it easy to create `NSAttributedString` and manipulate `String`.
 
@@ -89,7 +89,7 @@ textView.dataDetectorTypes = .link
 ```
 As a result, we get something like:
 
-![Example](Documentation/images/example.gif)
+![Example](https://github.com/andruvs/StringEx/blob/master/Documentation/images/example.gif)
 
 ## Installation
 
