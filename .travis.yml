@@ -1,9 +1,6 @@
 language: swift
 osx_image: xcode11.3
-xcode_project: StringEx.xcodeproj
-xcode_scheme: StringEx
 xcode_sdk: iphonesimulator13.2
-xcode_destination: platform=iOS Simulator,OS=11.3,name=iPhone X
 script:
 - set -o pipefail
-- travis_retry xcodebuild build-for-testing test | xcpretty
+- travis_retry xcodebuild -project StringEx.xcodeproj -scheme StringEx -destination "platform=iOS Simulator,OS=11.3,name=iPhone X" build-for-testing test | xcpretty
