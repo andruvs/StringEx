@@ -510,3 +510,143 @@ let ex = "Hello, <span />!".ex
 let str = ex[.tag("span")].insert("World").rawString
 print(str) // Hello, <span>World</span>!
 ```
+
+## Styling
+
+### Using styles
+
+You can apply different styles to selected substrings of `StringEx` instance like this:
+
+```swift
+let ex = "Hello, <span>World</span>!".ex
+
+// Apply single style
+ex[.tag("span")].style(.color(.red))
+
+// or an array of styles
+ex[.tag("span")].style([
+	.font(.systemFont(ofSize: 17.0)),
+	.color(.red),
+	.backgroundColor(.green)
+])
+```
+
+The following list of styles is available for use:
+
+Style | Description
+--- | ---
+`.font(_ font: UIFont)` | The font of the selected text
+`.color(_ color: UIColor)` | The color of the selected text
+`.backgroundColor(_ color: UIColor)` | The color of the background area behind the selected text
+`.kern(_ value: Double)` | The number of points by which to adjust kern-pair characters
+`.linkUrl(_ url: URL?)` | The link of the selected text
+`.linkString(_ string: String?)` | The link of the selected text
+`.shadow(_ shadow: NSShadow?)` | The shadow of the selected text
+`.lineThroughStyle(_ style: NSUnderlineStyle, color: UIColor? = nil)` | The line through style and color
+`.lineThroughStyles(_ styles: [NSUnderlineStyle], color: UIColor? = nil)` | The line through styles and color
+`.underlineStyle(_ style: NSUnderlineStyle, color: UIColor? = nil)` | The underline style and color
+`.underlineStyles(_ styles: [NSUnderlineStyle], color: UIColor? = nil)` | The underline styles and color
+`.strokeWidth(_ width: Double, color: UIColor? = nil)` | The stroke of the selected text
+`.baselineOffset(_ value: Double)` | The character’s offset from the baseline, in points
+`.paragraphStyle(_ value: NSParagraphStyle)` | The paragraph attributes
+`.aligment(_ value: NSTextAlignment)` | The text alignment
+`.firstLineHeadIndent(_ value: Double)` | The indentation of the first line
+`.headIndent(_ value: Double)` | The indentation of the lines other than the first
+`.tailIndent(_ value: Double)` | The trailing indentation
+`.lineHeightMultiple(_ value: Double)` | The line height multiple
+`.lineSpacing(_ value: Double)` | The distance in points between the bottom of one line fragment and the top of the next
+`.paragraphSpacing(_ value: Double)` | The space after the end of the paragraph
+`.paragraphSpacingBefore(_ value: Double)` | The distance between the paragraph’s top and the beginning of its text content
+
+> Using `aligment`, `firstLineHeadIndent`, `headIndent`, `tailIndent`, `lineHeightMultiple`, `lineSpacing`, `paragraphSpacing`, `paragraphSpacingBefore` styles creates `NSParagraphStyle` object with appropriate attributes. Therefore, reapplying these styles will completely overwrite this object.
+
+### Clearing styles
+
+```swift
+let ex = "Hello, <span>World</span>!".ex
+
+// Apply style to entire string
+ex.style(.color(.red))
+
+// Clear styles for span tag
+ex[.tag("span")].clearStyles()
+```
+
+### Stylesheets
+
+You can store common styles in a variable and apply them in multiple `StringEx` instances to avoid code duplication.
+
+```swift
+let styles = [
+	Stylesheet(selector: .tag("b"), styles: [
+		.font(.boldSystemFont(ofSize: 24.0)),
+		.color(.black)
+	]),
+	Stylesheet(selector: .tag("em"), style: .font(.italicSystemFont(ofSize: 17.0)))
+]
+
+let ex1 = "Hello, <b>World</b>!".ex
+let ex2 = "<em>Hello</em>, <b>World</b>!".ex
+
+ex1.style(styles)
+ex2.style(styles)
+```
+
+> Styles will be applied in the order in which they are listed in the array.
+
+### Style Manager
+
+The Style Manager is a centralized repository of styles grouped into themes. The Style Manager allows you to automatically apply the selected style theme to `StringEx` instances.
+
+First of all, you need to add some styles to the Style Manager and specify the theme name:
+
+```swift
+// Set heading styles
+StyleManager.shared.set("heading", [
+    Stylesheet(selector: .tag("h1"), styles: [
+        .font(.boldSystemFont(ofSize: 24.0)),
+        .color(.black)
+    ]),
+    Stylesheet(selector: .tag("h2"), styles: [
+        .font(.boldSystemFont(ofSize: 18.0)),
+        .color(.gray)
+    ])
+])
+
+// Set paragraph styles
+// You can use subscript to set the styles
+StyleManager.shared["paragraph"] = [
+    Stylesheet(selector: .tag("p"), styles: [
+        .font(.systemFont(ofSize: 17.0)),
+        .color(.black)
+    ])
+]
+
+// You can combine multiple themes into one
+StyleManager.shared.set("default", ["heading", "paragraph"])
+```
+
+You can set or change the current theme as follows:
+
+```swift
+StyleManager.shared.use("default")
+```
+
+In order for a specific `StringEx` instance to use the Style Manager, you need to set the property `useStyleManager = true`
+
+```swift
+let str = """
+<h1>Page title</h1>
+<p>Some text.</p>
+<p>Some text.</p>
+<h2>Title</h2>
+<p>Some text.</p>
+"""
+
+let ex = str.ex
+ex.useStyleManager = true
+
+// After that, when you access the property to get the NSAttributedString, 
+// the styles will be automatically applied to it
+myLabel.attributedText = ex.attributedString
+```
