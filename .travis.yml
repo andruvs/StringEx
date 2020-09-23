@@ -4,3 +4,6 @@ xcode_project: StringEx.xcodeproj
 xcode_scheme: StringEx
 xcode_sdk: iphonesimulator13.2
 xcode_destination: platform=iOS Simulator,OS=11.3,name=iPhone X
+script:
+- set -o pipefail
+- travis_retry xcodebuild build-for-testing test | xcpretty
