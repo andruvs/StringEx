@@ -32,6 +32,7 @@
 	* [Clearing styles](#clearing-styles)
 	* [Stylesheets](#stylesheets)
 	* [Style Manager](#style-manager)
+* [License](#license)
 
 ## Quick Example
 
@@ -536,7 +537,7 @@ ex[.tag("span")].style([
 ])
 ```
 
-The following list of styles is available for use:
+The following styles are available for use:
 
 Style | Description
 --- | ---
@@ -563,7 +564,7 @@ Style | Description
 `.paragraphSpacing(_ value: Double)` | The space after the end of the paragraph
 `.paragraphSpacingBefore(_ value: Double)` | The distance between the paragraph’s top and the beginning of its text content
 
-> Using `aligment`, `firstLineHeadIndent`, `headIndent`, `tailIndent`, `lineHeightMultiple`, `lineSpacing`, `paragraphSpacing`, `paragraphSpacingBefore` styles creates `NSParagraphStyle` object with appropriate attributes. Therefore, reapplying these styles will completely overwrite this object.
+> Using `aligment`, `firstLineHeadIndent`, `headIndent`, `tailIndent`, `lineHeightMultiple`, `lineSpacing`, `paragraphSpacing`, `paragraphSpacingBefore` styles creates `NSParagraphStyle` object with appropriate attributes. Therefore, reapplying some of these styles will completely overwrite this object.
 
 ### Clearing styles
 
@@ -631,7 +632,7 @@ StyleManager.shared["paragraph"] = [
 StyleManager.shared.set("default", ["heading", "paragraph"])
 ```
 
-You can set or change the current theme as follows:
+Then you can set or change the current theme as follows:
 
 ```swift
 StyleManager.shared.use("default")
@@ -655,3 +656,7 @@ ex.useStyleManager = true
 // the styles will be automatically applied to it
 myLabel.attributedText = ex.attributedString
 ```
+
+# License
+
+`StringEx` is released under an MIT license. See the [LICENSE](https://github.com/andruvs/StringEx/blob/master/LICENSE.md) file for more information.
