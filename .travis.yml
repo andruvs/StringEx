@@ -3,4 +3,4 @@ osx_image: xcode11.3
 xcode_sdk: iphonesimulator13.2
 script:
 - set -o pipefail
-- travis_retry xcodebuild -project StringEx.xcodeproj -scheme StringEx -destination "platform=iOS Simulator,OS=11.3,name=iPhone X" build-for-testing test | xcpretty
+- travis_retry xcodebuild -project StringEx.xcodeproj -scheme StringEx -destination "platform=iOS Simulator,OS=12.2,name=iPhone SE" build-for-testing test | xcpretty
