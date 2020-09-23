@@ -27,6 +27,11 @@
 	* [Appending](#appending)
 	* [Prepending](#prepending)
 	* [Inserting](#inserting)
+* [Styling](#styling)
+	* [Using styles](#using-styles)
+	* [Clearing styles](#clearing-styles)
+	* [Stylesheets](#stylesheets)
+	* [Style Manager](#style-manager)
 
 ## Quick Example
 
