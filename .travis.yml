@@ -1,9 +1,5 @@
 language: objective-c
-
 osx_image: xcode11.3
-env:
-  matrix:
-    - TEST_SDK=iphonesimulator13.2 OS=12.1 NAME='iPhone SE'
-
-script:
-  - set -o pipefail && xcodebuild test -enableCodeCoverage YES -project StringEx.xcodeproj -scheme StringEx -sdk $TEST_SDK -destination "platform=iOS Simulator,OS=$OS,name=$NAME" ONLY_ACTIVE_ARCH=YES
+xcode_project: StringEx.xcodeproj
+xcode_scheme: StringEx
+xcode_sdk: iphonesimulator13.2
