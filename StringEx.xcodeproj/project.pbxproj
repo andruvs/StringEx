@@ -7,8 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA1519EA244F1069005E8F76 /* HTMLTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1519E9244F1069005E8F76 /* HTMLTag.swift */; };
+		CA19541924C735B3000DE926 /* NSAttributedString+StringEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA19541824C735B3000DE926 /* NSAttributedString+StringEx.swift */; };
+		CA19541B24C736B0000DE926 /* StringExOperatorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA19541A24C736B0000DE926 /* StringExOperatorsTests.swift */; };
+		CA39C32A24DC608A000D672F /* StringSelectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39C32924DC608A000D672F /* StringSelectorTests.swift */; };
+		CA39C32C24E31A34000D672F /* Stylesheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39C32B24E31A34000D672F /* Stylesheet.swift */; };
+		CA39C32E24E31D29000D672F /* StyleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39C32D24E31D29000D672F /* StyleManager.swift */; };
+		CA39C33024EFD0B7000D672F /* StyleManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39C32F24EFD0B7000D672F /* StyleManagerTests.swift */; };
+		CA3F204D24C865E20035217F /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F204C24C865E20035217F /* Style.swift */; };
+		CA3F204F24C976960035217F /* StringExStylingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F204E24C976960035217F /* StringExStylingTests.swift */; };
+		CA43AE162458AC4F00AB4CF5 /* HTMLAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA43AE152458AC4F00AB4CF5 /* HTMLAttribute.swift */; };
 		CA54C52B239117EA00282E21 /* StringEx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA54C521239117EA00282E21 /* StringEx.framework */; };
-		CA54C530239117EA00282E21 /* StringExTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA54C52F239117EA00282E21 /* StringExTests.swift */; };
+		CA54C530239117EA00282E21 /* StringExStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA54C52F239117EA00282E21 /* StringExStringTests.swift */; };
 		CA54C532239117EA00282E21 /* StringEx.h in Headers */ = {isa = PBXBuildFile; fileRef = CA54C524239117EA00282E21 /* StringEx.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CA54C5422391191700282E21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA54C5412391191700282E21 /* AppDelegate.swift */; };
 		CA54C5442391191700282E21 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA54C5432391191700282E21 /* SceneDelegate.swift */; };
@@ -16,6 +26,24 @@
 		CA54C5492391191700282E21 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA54C5472391191700282E21 /* Main.storyboard */; };
 		CA54C54B2391191A00282E21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA54C54A2391191A00282E21 /* Assets.xcassets */; };
 		CA54C54E2391191A00282E21 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA54C54C2391191A00282E21 /* LaunchScreen.storyboard */; };
+		CA62660E244DDA090050C3A4 /* StringEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA62660D244DDA090050C3A4 /* StringEx.swift */; };
+		CA626610244DDBF90050C3A4 /* HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA62660F244DDBF90050C3A4 /* HTMLParser.swift */; };
+		CA626612244DECBC0050C3A4 /* HTMLTagParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA626611244DECBC0050C3A4 /* HTMLTagParser.swift */; };
+		CA72AE2B24C1E27000F06169 /* StringExAttributedStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA72AE2A24C1E27000F06169 /* StringExAttributedStringTests.swift */; };
+		CA7E596D2472B02D007F8245 /* SelectorResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7E596C2472B02D007F8245 /* SelectorResult.swift */; };
+		CA88D17B24ACCBE600E79798 /* RangeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA88D17A24ACCBE600E79798 /* RangeConverter.swift */; };
+		CA88D17D24AF74AD00E79798 /* String+StringEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA88D17C24AF74AD00E79798 /* String+StringEx.swift */; };
+		CA9AA66624658E6F00C2C2CF /* HTMLTagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AA66524658E6F00C2C2CF /* HTMLTagTests.swift */; };
+		CA9AA66824658EF900C2C2CF /* HTMLTagParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AA66724658EF900C2C2CF /* HTMLTagParserTests.swift */; };
+		CA9AA66A2469DA6100C2C2CF /* HTMLAttributeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AA6692469DA6100C2C2CF /* HTMLAttributeTests.swift */; };
+		CACDABD72462F64B00167623 /* HTMLTagStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACDABD62462F64B00167623 /* HTMLTagStorage.swift */; };
+		CAE4507D24842DA200284777 /* HTMLTagPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE4507C24842DA200284777 /* HTMLTagPair.swift */; };
+		CAE4507F248D1F0100284777 /* Array+StringEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE4507E248D1F0100284777 /* Array+StringEx.swift */; };
+		CAE45081248D1F5100284777 /* Array+StringExTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE45080248D1F5100284777 /* Array+StringExTests.swift */; };
+		CAF7D62F246BE2A1000238A3 /* example.htm in Resources */ = {isa = PBXBuildFile; fileRef = CAF7D62E246BE2A1000238A3 /* example.htm */; };
+		CAF7D631246C2D3D000238A3 /* HTMLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF7D630246C2D3D000238A3 /* HTMLParserTests.swift */; };
+		CAF7D633246C31DB000238A3 /* StringSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF7D632246C31DB000238A3 /* StringSelector.swift */; };
+		CAF7D635246C32A3000238A3 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF7D634246C32A3000238A3 /* Filter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,11 +57,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CA1519E9244F1069005E8F76 /* HTMLTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLTag.swift; sourceTree = "<group>"; };
+		CA19541824C735B3000DE926 /* NSAttributedString+StringEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+StringEx.swift"; sourceTree = "<group>"; };
+		CA19541A24C736B0000DE926 /* StringExOperatorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExOperatorsTests.swift; sourceTree = "<group>"; };
+		CA39C32924DC608A000D672F /* StringSelectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSelectorTests.swift; sourceTree = "<group>"; };
+		CA39C32B24E31A34000D672F /* Stylesheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stylesheet.swift; sourceTree = "<group>"; };
+		CA39C32D24E31D29000D672F /* StyleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleManager.swift; sourceTree = "<group>"; };
+		CA39C32F24EFD0B7000D672F /* StyleManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleManagerTests.swift; sourceTree = "<group>"; };
+		CA3F204C24C865E20035217F /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
+		CA3F204E24C976960035217F /* StringExStylingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExStylingTests.swift; sourceTree = "<group>"; };
+		CA43AE152458AC4F00AB4CF5 /* HTMLAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLAttribute.swift; sourceTree = "<group>"; };
 		CA54C521239117EA00282E21 /* StringEx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StringEx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA54C524239117EA00282E21 /* StringEx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringEx.h; sourceTree = "<group>"; };
 		CA54C525239117EA00282E21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA54C52A239117EA00282E21 /* StringExTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StringExTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA54C52F239117EA00282E21 /* StringExTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExTests.swift; sourceTree = "<group>"; };
+		CA54C52F239117EA00282E21 /* StringExStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExStringTests.swift; sourceTree = "<group>"; };
 		CA54C531239117EA00282E21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA54C53F2391191700282E21 /* StringExExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StringExExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA54C5412391191700282E21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +81,24 @@
 		CA54C54A2391191A00282E21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA54C54D2391191A00282E21 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA54C54F2391191A00282E21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA62660D244DDA090050C3A4 /* StringEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringEx.swift; sourceTree = "<group>"; };
+		CA62660F244DDBF90050C3A4 /* HTMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLParser.swift; sourceTree = "<group>"; };
+		CA626611244DECBC0050C3A4 /* HTMLTagParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLTagParser.swift; sourceTree = "<group>"; };
+		CA72AE2A24C1E27000F06169 /* StringExAttributedStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExAttributedStringTests.swift; sourceTree = "<group>"; };
+		CA7E596C2472B02D007F8245 /* SelectorResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectorResult.swift; sourceTree = "<group>"; };
+		CA88D17A24ACCBE600E79798 /* RangeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeConverter.swift; sourceTree = "<group>"; };
+		CA88D17C24AF74AD00E79798 /* String+StringEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+StringEx.swift"; sourceTree = "<group>"; };
+		CA9AA66524658E6F00C2C2CF /* HTMLTagTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLTagTests.swift; sourceTree = "<group>"; };
+		CA9AA66724658EF900C2C2CF /* HTMLTagParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLTagParserTests.swift; sourceTree = "<group>"; };
+		CA9AA6692469DA6100C2C2CF /* HTMLAttributeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLAttributeTests.swift; sourceTree = "<group>"; };
+		CACDABD62462F64B00167623 /* HTMLTagStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLTagStorage.swift; sourceTree = "<group>"; };
+		CAE4507C24842DA200284777 /* HTMLTagPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLTagPair.swift; sourceTree = "<group>"; };
+		CAE4507E248D1F0100284777 /* Array+StringEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+StringEx.swift"; sourceTree = "<group>"; };
+		CAE45080248D1F5100284777 /* Array+StringExTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+StringExTests.swift"; sourceTree = "<group>"; };
+		CAF7D62E246BE2A1000238A3 /* example.htm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = example.htm; sourceTree = "<group>"; };
+		CAF7D630246C2D3D000238A3 /* HTMLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLParserTests.swift; sourceTree = "<group>"; };
+		CAF7D632246C31DB000238A3 /* StringSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSelector.swift; sourceTree = "<group>"; };
+		CAF7D634246C32A3000238A3 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,9 +130,9 @@
 		CA54C517239117EA00282E21 = {
 			isa = PBXGroup;
 			children = (
-				CA54C523239117EA00282E21 /* StringEx */,
-				CA54C52E239117EA00282E21 /* StringExTests */,
-				CA54C5402391191700282E21 /* StringExExamples */,
+				CA54C523239117EA00282E21 /* Sources */,
+				CA54C52E239117EA00282E21 /* Tests */,
+				CA54C5402391191700282E21 /* Examples */,
 				CA54C522239117EA00282E21 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -91,25 +147,53 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CA54C523239117EA00282E21 /* StringEx */ = {
+		CA54C523239117EA00282E21 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				CA54C524239117EA00282E21 /* StringEx.h */,
 				CA54C525239117EA00282E21 /* Info.plist */,
+				CA62660D244DDA090050C3A4 /* StringEx.swift */,
+				CAF7D632246C31DB000238A3 /* StringSelector.swift */,
+				CAF7D634246C32A3000238A3 /* Filter.swift */,
+				CA7E596C2472B02D007F8245 /* SelectorResult.swift */,
+				CA62660F244DDBF90050C3A4 /* HTMLParser.swift */,
+				CA626611244DECBC0050C3A4 /* HTMLTagParser.swift */,
+				CA1519E9244F1069005E8F76 /* HTMLTag.swift */,
+				CAE4507C24842DA200284777 /* HTMLTagPair.swift */,
+				CA43AE152458AC4F00AB4CF5 /* HTMLAttribute.swift */,
+				CACDABD62462F64B00167623 /* HTMLTagStorage.swift */,
+				CA88D17A24ACCBE600E79798 /* RangeConverter.swift */,
+				CA3F204C24C865E20035217F /* Style.swift */,
+				CA39C32B24E31A34000D672F /* Stylesheet.swift */,
+				CA39C32D24E31D29000D672F /* StyleManager.swift */,
+				CAE4507E248D1F0100284777 /* Array+StringEx.swift */,
+				CA88D17C24AF74AD00E79798 /* String+StringEx.swift */,
+				CA19541824C735B3000DE926 /* NSAttributedString+StringEx.swift */,
 			);
-			path = StringEx;
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		CA54C52E239117EA00282E21 /* StringExTests */ = {
+		CA54C52E239117EA00282E21 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				CA54C52F239117EA00282E21 /* StringExTests.swift */,
+				CA9AA66B246BE20B00C2C2CF /* Resource */,
 				CA54C531239117EA00282E21 /* Info.plist */,
+				CA54C52F239117EA00282E21 /* StringExStringTests.swift */,
+				CA72AE2A24C1E27000F06169 /* StringExAttributedStringTests.swift */,
+				CA19541A24C736B0000DE926 /* StringExOperatorsTests.swift */,
+				CA3F204E24C976960035217F /* StringExStylingTests.swift */,
+				CA9AA66524658E6F00C2C2CF /* HTMLTagTests.swift */,
+				CA9AA66724658EF900C2C2CF /* HTMLTagParserTests.swift */,
+				CA9AA6692469DA6100C2C2CF /* HTMLAttributeTests.swift */,
+				CAF7D630246C2D3D000238A3 /* HTMLParserTests.swift */,
+				CAE45080248D1F5100284777 /* Array+StringExTests.swift */,
+				CA39C32924DC608A000D672F /* StringSelectorTests.swift */,
+				CA39C32F24EFD0B7000D672F /* StyleManagerTests.swift */,
 			);
-			path = StringExTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
-		CA54C5402391191700282E21 /* StringExExamples */ = {
+		CA54C5402391191700282E21 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
 				CA54C5412391191700282E21 /* AppDelegate.swift */,
@@ -120,7 +204,15 @@
 				CA54C54C2391191A00282E21 /* LaunchScreen.storyboard */,
 				CA54C54F2391191A00282E21 /* Info.plist */,
 			);
-			path = StringExExamples;
+			path = Examples;
+			sourceTree = "<group>";
+		};
+		CA9AA66B246BE20B00C2C2CF /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				CAF7D62E246BE2A1000238A3 /* example.htm */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +294,7 @@
 				TargetAttributes = {
 					CA54C520239117EA00282E21 = {
 						CreatedOnToolsVersion = 11.2.1;
+						LastSwiftMigration = 1120;
 					};
 					CA54C529239117EA00282E21 = {
 						CreatedOnToolsVersion = 11.2.1;
@@ -243,6 +336,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAF7D62F246BE2A1000238A3 /* example.htm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +357,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA88D17B24ACCBE600E79798 /* RangeConverter.swift in Sources */,
+				CA62660E244DDA090050C3A4 /* StringEx.swift in Sources */,
+				CAF7D635246C32A3000238A3 /* Filter.swift in Sources */,
+				CA1519EA244F1069005E8F76 /* HTMLTag.swift in Sources */,
+				CAF7D633246C31DB000238A3 /* StringSelector.swift in Sources */,
+				CA626610244DDBF90050C3A4 /* HTMLParser.swift in Sources */,
+				CAE4507F248D1F0100284777 /* Array+StringEx.swift in Sources */,
+				CA3F204D24C865E20035217F /* Style.swift in Sources */,
+				CA626612244DECBC0050C3A4 /* HTMLTagParser.swift in Sources */,
+				CAE4507D24842DA200284777 /* HTMLTagPair.swift in Sources */,
+				CA43AE162458AC4F00AB4CF5 /* HTMLAttribute.swift in Sources */,
+				CA39C32E24E31D29000D672F /* StyleManager.swift in Sources */,
+				CA88D17D24AF74AD00E79798 /* String+StringEx.swift in Sources */,
+				CACDABD72462F64B00167623 /* HTMLTagStorage.swift in Sources */,
+				CA7E596D2472B02D007F8245 /* SelectorResult.swift in Sources */,
+				CA39C32C24E31A34000D672F /* Stylesheet.swift in Sources */,
+				CA19541924C735B3000DE926 /* NSAttributedString+StringEx.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,7 +381,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA54C530239117EA00282E21 /* StringExTests.swift in Sources */,
+				CA54C530239117EA00282E21 /* StringExStringTests.swift in Sources */,
+				CAF7D631246C2D3D000238A3 /* HTMLParserTests.swift in Sources */,
+				CA72AE2B24C1E27000F06169 /* StringExAttributedStringTests.swift in Sources */,
+				CA39C32A24DC608A000D672F /* StringSelectorTests.swift in Sources */,
+				CA9AA66824658EF900C2C2CF /* HTMLTagParserTests.swift in Sources */,
+				CAE45081248D1F5100284777 /* Array+StringExTests.swift in Sources */,
+				CA19541B24C736B0000DE926 /* StringExOperatorsTests.swift in Sources */,
+				CA9AA66624658E6F00C2C2CF /* HTMLTagTests.swift in Sources */,
+				CA9AA66A2469DA6100C2C2CF /* HTMLAttributeTests.swift in Sources */,
+				CA3F204F24C976960035217F /* StringExStylingTests.swift in Sources */,
+				CA39C33024EFD0B7000D672F /* StyleManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,13 +558,15 @@
 		CA54C536239117EA00282E21 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = StringEx/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -452,6 +575,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = andruvs.StringEx;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -460,13 +584,15 @@
 		CA54C537239117EA00282E21 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = StringEx/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -483,8 +609,9 @@
 		CA54C539239117EA00282E21 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = StringExTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -500,8 +627,9 @@
 		CA54C53A239117EA00282E21 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = StringExTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -519,7 +647,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = StringExExamples/Info.plist;
+				INFOPLIST_FILE = Examples/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -527,7 +656,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = andruvs.StringExExamples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -536,7 +665,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = StringExExamples/Info.plist;
+				INFOPLIST_FILE = Examples/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -544,7 +674,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = andruvs.StringExExamples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
