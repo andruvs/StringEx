@@ -1,3 +1,5 @@
+[![Travis CI](https://travis-ci.org/andruvs/StringEx.svg?branch=master)](https://travis-ci.org/andruvs/StringEx)
+
 # StringEx
 
 `StringEx` makes it easy to create `NSAttributedString` and manipulate `String`.
