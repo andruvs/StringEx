@@ -1,6 +1,6 @@
 # StringEx
 
-[![Travis CI](https://travis-ci.org/andruvs/StringEx.svg?branch=master)](https://travis-ci.org/andruvs/StringEx) ![Cocoapods](https://img.shields.io/cocoapods/v/StringEx?label=Cocoapods)
+[![Travis CI](https://travis-ci.org/andruvs/StringEx.svg?branch=master)](https://travis-ci.org/andruvs/StringEx) [![pod](https://img.shields.io/cocoapods/v/StringEx?label=pod)](https://cocoapods.org/pods/StringEx)
 
 `StringEx` makes it easy to create `NSAttributedString` and manipulate `String`.
 
