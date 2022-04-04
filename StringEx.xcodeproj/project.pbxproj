@@ -57,6 +57,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C9F0AE2627FB171700153761 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		CA1519E9244F1069005E8F76 /* HTMLTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLTag.swift; sourceTree = "<group>"; };
 		CA19541824C735B3000DE926 /* NSAttributedString+StringEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+StringEx.swift"; sourceTree = "<group>"; };
 		CA19541A24C736B0000DE926 /* StringExOperatorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExOperatorsTests.swift; sourceTree = "<group>"; };
@@ -130,6 +131,7 @@
 		CA54C517239117EA00282E21 = {
 			isa = PBXGroup;
 			children = (
+				C9F0AE2627FB171700153761 /* Package.swift */,
 				CA54C523239117EA00282E21 /* Sources */,
 				CA54C52E239117EA00282E21 /* Tests */,
 				CA54C5402391191700282E21 /* Examples */,
