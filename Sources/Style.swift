@@ -81,4 +81,7 @@ public enum Style {
     
     /// The distance between the paragraph’s top and the beginning of its text content
     case paragraphSpacingBefore(_ value: Double)
+    
+    /// The attachment for the text
+    case attachment(_ value: Any?)
 }
