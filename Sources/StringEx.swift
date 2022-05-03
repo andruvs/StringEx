@@ -894,6 +894,8 @@ extension StringEx {
                     paragraphStyle = NSMutableParagraphStyle()
                 }
                 paragraphStyle!.paragraphSpacingBefore = CGFloat(value)
+            case .attachment(let value):
+                attributes[.attachment] = value
             }
         }
         
